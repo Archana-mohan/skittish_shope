@@ -1,0 +1,175 @@
+{% extends 'admin_panel/base.html' %}
+
+
+{% load tz %}
+
+{% block content%} 
+  {% for item in oderit %}
+   
+  <section class="h-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-10 col-xl-8">
+                <div class="card" style="border-radius: 10px;">
+                    <div class="card-header px-4 py-5">
+                        <h5 class="text-muted mb-0">View Order <span style="color: #a8729a;"></span></h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                        
+                        </div>
+                        
+                        <div class="card shadow-0 border mb-4">
+                            <div class="card-body">  
+                                
+                                <div class="row"> 
+                                    
+                                    <div class="col-md-2">
+                                        {% if item.productattr.product_images.all %}
+                                        <img src="/media/{{item.productattr.product_images.first.image}}"
+                                            class="img-fluid" alt="Phone">
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0">{{i.id}}</p>
+                                    </div>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">{{item.size}}</p>
+                                    </div>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">{{item.color}}</p>
+                                    </div>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">{{item.product_qty}}</p>
+                                    </div>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">{{item.product_price}}</p>
+                                    </div>
+                                
+                                
+                                </div>
+                                <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-md-2">
+                                        <p class="text-muted mb-0 small">Track Order</p>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="progress" style="height: 6px; border-radius: 16px;">
+                                            <div class="progress-bar" role="progressbar"
+                                                style="width: {{item.progress_percentage }}%; border-radius: 16px; background-color: {{item.progressColor}};"
+                                                aria-valuenow="{{item.progress_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="d-flex justify-content-around mb-1">
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">{{item.status}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between pt-2">
+                            <p class="fw-bold mb-0">Order Details</p>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between pt-2">
+                            <p class="text-muted mb-0">Tracking Id: {{item.order.tracking_number}}</p>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <p class="text-muted mb-0">Invoice Date: {{ item.order.created_at|timezone:"Asia/Kolkata" }}</p>
+                            <p class="text-muted mb-0">Delivery Address:<br>{{item.order.address.username}}<br>{{item.order.address.address}}<br>{{item.order.address.city}},{{item.order.address.state}}<br>{{item.order.address.country}},{{item.order.address.pincode}}</p>
+                        </div>
+                        
+                    </div>
+                    <div class="card-footer border-0 px-3 py-2 d-flex justify-content-between align-items-center" style="background-color: #e8e8e8; border-radius: 8px;">
+                        <h5 class="text-black text-uppercase mb-0" style="font-size: 15px;">Product Amount: <span class="h2 mb-0 ms-2" style="font-size: 15px;">{{item.product_price}}</span></h5>
+                    
+                        {% if item.status == 'return' %}
+                        {% if item.time_difference.days < 5 %}
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <button type="button" class="btn btn-light mx-2 my-2" data-toggle="modal" data-target="#returnProductModal-{{ item.id }}" onclick="approveReturn('{{ item.id }}')">Approve Return</button>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                    </div>
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Cancel Order Modal -->
+    <div id="cancelOrderModal-{{ forloop.counter }}" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <form id="cancelOrderForm-{{ forloop.counter }}" action="{% url 'order_cancel' item.id %}" method="POST">
+              {% csrf_token %}
+              <div class="modal-header bg-light">
+                <h4 class="modal-title text-danger">Cancel Order</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+              <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+                <div class="text-center">
+                  <p>Are you sure you want to cancel this order?</p>
+                  <p class="text-muted"><small>{{ item.slug }} The order will be cancelled.</small></p>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">No</button>
+                <button type="submit" class="btn btn-danger">Yes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    <!-- Return Product Modal -->
+    <div id="returnProductModal-{{ item.id }}" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form>
+              {% csrf_token %}
+              <div class="modal-header">
+                <h4 class="modal-title">Approve Return Product</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+              <div class="modal-body">
+                <div class="text-center">
+                <p>Are you sure you want to Approve return?</p>
+                <p class="text-warning"><small>{{ item.product_name }} will be returned</small></p>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">No</button>
+                <a href="{% url 'approve_return' item.id %}" type="submit" class="btn btn-danger">Yes</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      
+  
+  {% endfor %}
+{% endblock %}
+{% block scripts %}
+<script>
+    function approveReturn(itemId) {
+        // Disable the button
+        var button = document.getElementById('approveReturnBtn-' + itemId);
+        button.disabled = true;
+        button.innerText = 'Return Approved';
+        button.classList.add('disabled');
+    }
+</script>
+
+{% endblock scripts %}
+
+

@@ -1,0 +1,275 @@
+{% extends 'admin_panel/base.html' %}
+{% block styles%}
+
+<style>
+    .btn-cancel {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 5px;
+        text-decoration: none;
+      }
+      
+      .btn-cancel:hover {
+        background-color: white;
+        color: black;
+      }
+      
+    </style>
+    {% endblock %}
+{% block content%}
+        <div class="container">
+          
+          
+            <!-- row -->
+            <div class="row tm-content-row pt-4">
+              <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 tm-block-col">
+                <h2 class="tm-block-title">Order placed graph</h2>
+                <div class="tm-bg-primary-dark tm-block" style="display: flex; justify-content: center;">
+                  <canvas id="myChart" style="background-color: #ffffff;"></canvas>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 tm-block-col mx-auto text-center">
+                <h2 class="tm-block-title">Delivered Orders graph</h2>
+                <div class="tm-bg-primary-dark tm-block" style="display: flex; justify-content: center;">
+                  <canvas id="myBubbleChart" width="300" height="300" style="background-color: #ffffff; text-center"></canvas>
+                </div>
+              </div>
+            </div>
+            
+               
+              
+                <div class="col-12 tm-block-col" style="width: 100%;">
+                    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll" style="width: 120%;margin-left: -83px;">
+                        <h2 class="tm-block-title">Newely Ordered products</h2>
+                        <table class="table">
+                            <thead>
+                                <th scope="col">ORDER NO.</th>
+                                <th scope="col">STATUS</th>
+                                <th scope="col">DATE</th>
+                                <th scope="col">ADDRESS</th>
+                                <th scope="col">PRODUCT</th>
+                                <th scope="col">COLOR</th>
+                                <th scope="col">SIZE</th>
+                                <th scope="col">QUANTITY</th>
+                                <th scope="col">EST DELIVERY DUE</th>
+                                <th scope="col">ORDER CANCEL</th>
+                                <th scope="col">EDIT</th>
+                            </thead>
+                            <tbody>
+                                {% if new %}
+                                {% for i in new %}
+                                <tr>
+                                    <th scope="row"><b>{{i.id}}</b></th>
+                                    <td>
+                                        {% if i.status == 'Pending' %}
+                                            <div class="tm-status-circle moving"></div>
+                                            {{ i.status }}
+                                        {% elif i.status == 'Cancelled' %}
+                                            <div class="tm-status-circle cancelled"></div>
+                                            {{ i.status }}
+                                        {% else %}
+                                            {{ i.status }}
+                                        {% endif %}
+                                    </td>
+                                    <td><b>{{i.order.created_at}}</b></td>
+                                    <td><b>{{i.order.address.username}}<br>{{i.order.address.address}}<br>{{i.order.address.city}},{{i.order.address.state}}<br>{{i.order.address.country}},{{i.order.address.pincode}}</b></td>
+                                    <td><b>{{i.product}}</b></td>
+                                    <td><b>{{i.color}}</b></td>
+                                    <td><b>{{i.size}}</b></td>
+                                    <td><b>{{i.product_qty}}</b></td>
+                                    <td>{{ i.get_estimated_delivery_date|date:'Y-m-d' }}</td>
+                                    
+                                   
+                                    <td>
+                       
+                                        <a href="{% url 'order_cancelled' i.id %}" class="btn btn-cancel" data-toggle="tooltip" title="Cancel">
+                                          <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                        </a>
+                                      
+                                    </td>
+                                    <td>
+                                      <a href="{% url 'order_update' i.id %}" class="btn text-secondary px-0" data-toggle="tooltip" title="Edit">
+                                        <i class="icon-copy fa fa-edit" aria-hidden="true" style="color: white;"></i>
+                                      </a>
+                                    </td>
+                                </tr>
+         {% endfor %}
+         {% endif %}
+                               
+                             
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+<!--second-->
+
+<div class="col-12 tm-block-col">
+    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+        <h2 class="tm-block-title">Top Selling products</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"> NO.</th>
+                    <th scope="col">PRODUCT</th>
+                    <th scope="col">QUANTITY OF SOLD</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in top_selling_products %}
+
+                <tr>
+                    <th scope="row"><b>{{ forloop.counter }}</b></th>
+                    <td><b>{{ product.product }}</b></td>
+                    <td><b> {{ product.total_quantity }}</b></td>
+                   
+                </tr>
+{% endfor %}
+
+               
+             
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+<!--end-->
+
+
+
+
+
+
+            </div>
+        </div>
+        {% endblock %}
+        {% block scripts %}
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script type="text/javascript">
+          const labels = Array.from(new Set({{ delmonthNumber | safe }})); // Remove duplicates from delmonthNumber array
+          const totalOrderCount = JSON.parse('{{ total_order_count|safe }}');
+          const orderCounts = labels.map(label => (totalOrderCount[label] || 0));
+          
+          console.log(orderCounts)
+          const data = {
+              labels: labels,
+              datasets: [
+                  {
+                      label: 'Delivered Orders',
+                      backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                      borderColor: 'rgb(255, 99, 132)',
+                      data: {{ deltotalOrders }},
+                  },
+                  {
+                      label: 'Pending Orders',
+                      backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                      borderColor: 'rgb(54, 162, 235)',
+                      data: {{ pendingtotalOrders }},
+                  },
+                  {
+                      label: 'Cancelled Orders',
+                      backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                      borderColor: 'rgb(255, 206, 86)',
+                      data: {{ canceltotalOrders }},
+                  },
+                  {
+                      label: 'Returned Orders',
+                      backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                      borderColor: 'rgb(75, 192, 192)',
+                      data: {{ returntotalOrders }},
+                  },
+                  {
+                      label: 'Order Placed',
+                      backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                      borderColor: 'rgb(153, 102, 255)',
+                      data:orderCounts,
+                  },
+              ],
+          };
+      
+          const config = {
+              type: 'bar',
+              data: data,
+              options: {
+                  scales: {
+                      y: {
+                          beginAtZero: true,
+                      },
+                  },
+              },
+          };
+      
+          var myChart = new Chart(document.getElementById('myChart'), config);
+      </script>
+      <script type="text/javascript">
+        (function() {
+          const categoryOrderCounts = JSON.parse('{{ category_order_counts|safe }}');
+          console.log("hai");
+          const categories = Object.keys(categoryOrderCounts);
+          const colors = ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'];
+          const orderCounts = categories.map(category => categoryOrderCounts[category]);
+          console.log(orderCounts);
+          const labeledCount = categories.length;
+          const totalOrders = orderCounts.reduce((a, b) => a + b, 0);
+          const data = {
+            labels: ['casuals', 'formals', 'sports'],
+            datasets: [
+              {
+                label: 'Order Status',
+                backgroundColor: colors.slice(0, labeledCount),
+                borderColor: colors.slice(0, labeledCount),
+                data: orderCounts,
+              }
+            ]
+          };
+        
+          if (totalOrders > 0 || labeledCount > 0) {
+            const config = {
+              type: 'pie',
+              data: data,
+              options: {
+                tooltips: {
+                  callbacks: {
+                    label: function(tooltipItem, data) {
+                      var dataset = data.datasets[tooltipItem.datasetIndex];
+                      var value = dataset.data[tooltipItem.index];
+                      return data.labels[tooltipItem.index] + ': ' + value;
+                    }
+                  }
+                }
+              }
+            };
+        
+            var myPieChart = new Chart(
+              document.getElementById('myBubbleChart'),
+              config
+            );
+          } else {
+            // Handle the case when there is no data available
+            document.getElementById('myBubbleChart').innerHTML = 'No data available.';
+          }
+        })();
+        
+      </script>
+        
+          
+          {% endblock scripts %}   
+          
+          
+
+
+       

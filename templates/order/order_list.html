@@ -1,0 +1,55 @@
+
+{% extends 'account/base.html' %}
+
+{% block content%}
+<main class="container my-4">
+  <div class="card">
+    <div class="card-header bg-light px-4 py-5">
+      <h5 class="text-muted mb-0">Your Order List <span style="color: #a8729a;">{{order.user}}</span></h5>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <colgroup>
+            <col style="width: 10%;">
+            <col style="width: 15%;">
+            <col style="width: 15%;">
+            <col style="width: 15%;">
+            <col style="width: 20%;">
+            <col style="width: 25%;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="text-center">No</th>
+              <th>Payment Mode</th>
+              <th>Total Price</th>
+              <th>Order ID</th>
+              <th>Tracking Number</th>
+              <th>Product Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if order %}
+            {% for i in order %}
+            <tr>
+              <td class="text-center align-middle"><a href="{% url 'my_order_items' i.id %}">{{ forloop.counter }}</a></td>
+              <td class="align-middle">{{ i.payment_mode }}</td>
+              <td class="align-middle">{{ i.total_price }}</td>
+              <td class="align-middle">{{ i.payment_id }}</td>
+              <td class="align-middle">{{ i.tracking_number }}</td>
+              <td class="align-middle pl-0">
+                {% for item in i.orderitem_set.all %}
+                {{ item.product.product_name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,162 @@
+
+			<h3 class="mb-4 border-bottom pb-1">Filters</h3>
+            <!-- Filter 0 -->
+			
+			<div class="card mb-4">
+				<h6 class="card-header">Gender</h6>
+				<div class="list-group list-group-flush">
+                    {% for i in all_gender%}
+					<li class="list-group-item">
+						<input class="filter-checkbox" data-filter="gender" value="{{i.uid}}" type="checkbox" />&nbsp;
+						{{i.gender_name}}
+					</li>
+					{% endfor %}
+				</div>
+			</div>
+            <!-- Filter 1 -->
+			<div class="card mb-4">
+				<h6 class="card-header">Categories</h6>
+				<div class="list-group list-group-flush">
+					{% for cat in  all_catdisp %}
+					<li class="list-group-item">
+						<input class="filter-checkbox" data-filter="category" value="{{cat.uid}}" type="checkbox" />&nbsp;
+						{{cat.category_name}}
+					</li>
+					{% endfor %}
+				</div>
+			</div>
+			<!-- Filter 2 -->
+			<div class="card mb-4">
+				<h6 class="card-header">Colors</h6>
+				<div class="list-group list-group-flush">
+					{% for color in all_color %}
+					<li class="list-group-item">
+						<input class="filter-checkbox" data-filter="color" style="length:10px" value="{{ color.uid}}" type="checkbox" />&nbsp;
+						<button class="btn" style="background-color: {{color.color_code}}; margin-top: -5px;"></button>
+						
+					</li>
+					{% endfor %}
+				</div>
+			</div>
+	
+			
+			<!-- Filter 3 -->
+			<div class="card mb-4">
+				<h6 class="card-header">Sizes</h6>
+				<div class="list-group list-group-flush">
+					{% for i in all_size %}
+					<li class="list-group-item">
+						<input class="filter-checkbox" data-filter="size" value="{{i.uid}}" type="checkbox" />&nbsp;
+						{{i.size_name}}
+					</li>
+					{% endfor %}
+				</div>
+			</div>
+<!-- Filter 4 -->
+			<div class="card mb-4">
+				<h6 class="card-header">Sorting</h6>
+				<div class="list-group list-group-flush">
+				
+					<li class="list-group-item">
+						<input class="filter-checkbox" data-filter="sorting" value="{{'A'}}" type="checkbox" />&nbsp;
+						Whats New
+					</li>
+					<li class="list-group-item">
+						<input class="filter-checkbox" data-filter="sorting" value="{{'Z'}}" type="checkbox" />&nbsp;
+						Best Seller
+					</li>
+					<li class="list-group-item">
+						<input class="filter-checkbox" data-filter="sorting" value="{{'H'}}" type="checkbox" />&nbsp;
+						PRICE(highest first)
+					</li>
+					<li class="list-group-item">
+						<input class="filter-checkbox" data-filter="sorting" value="{{'L'}}" type="checkbox" />&nbsp;
+						 PRICE(lowest first)
+					</li>
+					
+				</div>
+			</div>
+            <!-- Price Filter -->
+			<div class="card mb-4">
+				<h6 class="card-header">Price</h6>
+				<div class="list-group list-group-flush">
+					<li class="list-group-item">
+						<input type="range" id="rangeInput" value={{minMaxprice.selling_price__max}} min={{minMaxprice.selling_price__min}}  max={{minMaxprice.selling_price__max}} oninput="document.getElementById('maxPrice').value = this.value;">
+					<p>Price range: ₹{{minMaxprice.selling_price__min}}-₹{{minMaxprice.selling_price__max}}</p>
+					</li>
+					<li class="list-group-item">
+						Max: <input type="text" id="maxPrice" value={{minMaxprice.selling_price__min}} min={{minMaxprice.selling_price__min}} max={{minMaxprice.selling_price__max}} oninput="document.getElementById('rangeInput').value = this.value;">
+						<button id="priceFilterBtn" class="btn btn-info btn-sm mt-1">Filter</button>
+					</li>
+				</div>
+			</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$(".ajaxLoader").hide();
+		// Product Filter Start
+		$(".filter-checkbox,#priceFilterBtn").on('click',function(){
+			var _filterObj={};			
+			var _minPrice=$('#maxPrice').attr('min');
+			var _maxPrice=$('#maxPrice').val();
+			console.log('how is this')
+			console.log(_minPrice)
+			_filterObj.minPrice=_minPrice;
+			_filterObj.maxPrice=_maxPrice;
+			$(".filter-checkbox").each(function(index,ele){
+				var _filterVal=$(this).val();
+				var _filterKey=$(this).data('filter');
+				_filterObj[_filterKey]=Array.from(document.querySelectorAll('input[data-filter='+_filterKey+']:checked')).map(function(el){
+					
+					return el.value;
+				});
+			});
+	
+			// Run Ajax
+			$.ajax({
+				url:'/filter_data',
+				data:_filterObj,
+				dataType:'json',
+				beforeSend:function(){
+					
+					$(".ajaxLoader").show();
+				},
+				success:function(res){
+					console.log(res);
+
+					$("#filteredProducts").html(res.data);
+					$(".ajaxLoader").hide();
+					
+				}
+			});
+		});
+		// End
+	});
+
+		// JavaScript code to show/hide maxPrice input field based on rangeInput value
+		document.getElementById('rangeInput').addEventListener('input', function() {
+			var maxPriceInput = document.getElementById('maxPrice');
+			if (maxPriceInput.style.display === 'none') {
+				maxPriceInput.style.display = 'block';
+			}
+			maxPriceInput.value = this.value;
+		});
+		
+		$("#maxPrice").on('blur',function(){
+			console.log('hello')
+			var _min=$(this).attr('min');
+			var _max=$(this).attr('max');
+			var _value=$(this).val();
+			console.log(_value,_min,_max);
+			if(_value < parseInt(_min) || _value > parseInt(_max)){
+				console.log('valueless')
+				alert('Values should be '+_min+'-'+_max);
+				$(this).val(_min);
+				$(this).focus();
+				$("#rangeInput").val(_min);
+				return false;
+			}
+		});
+
+
+</script>

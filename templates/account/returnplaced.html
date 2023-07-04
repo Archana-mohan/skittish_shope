@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Cancel Confirmation</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+</head>
+<body>
+  
+  <!-- Your other HTML content here -->
+  
+  <script>
+    {% if message == 'success' %}
+    Swal.fire("Return Placed", "Your Product has been successfully returned.", "success").then(() => {
+        window.location.href = "/oders/my_orders";
+    });
+    {% elif message == 'warning' %}
+    Swal.fire("Product Not returned", "Product cannot be returned.", "warning").then(() => {
+        window.location.href = "/oders/my_orders";
+    });
+    {% endif %}
+  </script>
+</body>
+</html>

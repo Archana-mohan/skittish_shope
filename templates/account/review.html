@@ -1,0 +1,62 @@
+<div class="tab-pane" id="tabs-3" role="tabpanel">
+    <h6>Reviews ( {{reviews_count}} )</h6>
+    <div class="blog_details_comment">
+        {% if flag %}
+        <!-- Add review form -->
+        {% if not review_by_user  %}
+        <div class="container mt-3">
+            <form method="POST">
+            {% csrf_token %}
+            <div class="row mb-3">
+                <label for="{{ form.comment.id_for_label }}" class="col-sm-2 col-form-label fw-bold">Comment:</label>
+                <div class="col-sm-10">
+                {{ form.comment }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="{{ form.rating.id_for_label }}" class="col-sm-2 col-form-label fw-bold">Rating:</label>
+                <div class="col-sm-10">
+                {{ form.rating }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary px-5">Submit</button>
+                </div>
+            </div>
+            </form>
+        </div>
+
+        {% endif %}
+
+        {% endif %}
+        {% if reviews_on_product %}
+            {% for review in reviews_on_product %}
+        <div class="blog_comment_item">
+            <div class="blog_commentitem_pic">
+                <img src="img/blog/details/comment-3.jpg" alt="">
+            </div>
+            <div class="blog_commentitem_text">
+                <h6>{{review.user}}</h6>
+                <p>{{review.comment}}.</p>
+                <ul>
+
+                    <li><i class="fa fa-clock-o"></i>{{review.added_at}}</li>
+                    {{review.rating}}
+                    <li>{% for i in itrator %}
+                        
+                        {% if review.rating >= i %}
+                           
+                        <i class="icon-copy fa fa-star" aria-hidden="true"></i>
+                           
+                        {% endif %}
+                        
+                        {% endfor %}</li>
+                   
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,385 @@
+{% extends 'account/base.html' %}
+
+{% block styles %}
+<style>
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+      }
+      
+      .quantity-controls button {
+        margin: 0 0.00025px; /* Adjust the margin as needed */
+      }
+      
+      .quantity-value {
+        margin: 0 0.00025px; /* Adjust the margin as needed */
+      }
+
+
+</style>
+{% endblock %}
+{% block content%}
+{% csrf_token%}
+        <main class="main">
+        	<div class="page-header text-center" style="background-image: url('/media/images/page-header-bg.jpg')">
+        		<div class="container">
+        			<h1 class="page-title">Shopping Cart<span>Shop</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+            	<div class="cart">
+	                <div class="container">
+	                	<div class="row">
+	                		<div class="col-lg-9">
+	                			<table class="table table-cart table-mobile">
+									<thead>
+										<tr>
+											<th>Product</th>
+											<th>Price</th>
+                                            <th>Color</th>
+                                            <th>Size</th>
+											<th>Quantity</th>
+											<th>Total</th>
+											<th></th>
+										</tr>
+									</thead>
+
+                                    <tbody>
+                                        {% if cart %}
+                                        {% for i in cart %}
+                                        <tr class="finding" data-product="{{ i.productattr_id }}">
+                                            <input type="hidden" value="{{ i.productattr_id }}" class="product_id">
+                                            <td class="product-col">
+                                                <div class="product">
+                                                    {% if i.productattr.product_images.all %}
+                                                        <figure class="product-media">
+                                                            <a href="{% url 'product_detail' i.product_id %}">
+                                                                <img src="/media/{{ i.productattr.product_images.first.image }}" alt="Product image">
+                                                            </a>
+                                                        </figure>
+                                                    {% endif %}
+                                                    <h3 class="product-title">
+                                                        <a href="#">{{ i.product.product_name }}</a>
+                                                    </h3><!-- End .product-title -->
+                                                </div><!-- End .product -->
+                                            </td>
+                                            <td class="price-col" id="changeprice">₹{{ i.product_price }}</td>
+                                            <td class="price-col">{{ i.color }}</td>
+                                            <td class="price-col">{{ i.size }}</td>
+                                            <td class="quantity-col">
+                                                {% if i.productattr.quantity >= i.product_qty %}
+                                                    <div class="cart-product-quantity">
+                                                        <button class="btn btn-decrement" data-quantity="{{ i.product_qty }}">-</button>
+                                                        <span class="quantity-value">{{ i.product_qty }}</span>
+                                                        <button class="btn btn-increment" data-quantity="{{ i.product_qty }}">+</button>
+                                                    </div>
+                                                {% else %}
+                                                    <h6>Out of stock</h6>
+                                                {% endif %}
+                                            </td>
+                                            <td class="total-col" id="total_prices">₹{{ i.total_price }}</td>
+                                            <td class="remove-col">
+                                                <a href="{% url 'cart' %}">
+                                                    <button class="btn-remove">
+                                                        <i class="icon-close"></i>
+                                                    </button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="7">Your cart is empty.</td>
+                                            </tr>
+                                        {% endif %}
+                                    </tbody>
+                                    
+                                    
+								</table><!-- End .table table-wishlist -->
+
+	                			<div class="cart-bottom">
+			            			<div class="cart-discount">
+			            				<form id="coupon-form">
+                                            
+                                            {% csrf_token%}
+                                            {% include "account/alerts.html" %}
+                                            
+			            					<div class="input-group">
+				        						<input type="text" name="coupon" class="form-control" id="id_coupon_code" required placeholder="coupon code">
+				        						<div class="input-group-append">
+													<button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
+                                                   
+                                                </div><!-- .End .input-group-append -->
+                                               
+			        						</div><!-- End .input-group -->
+			            				</form>
+                                        <div class="available-coupons">
+                                            <h4>Available Coupons:</h4>
+                                            {% for i in available_coupon %}
+                                            <ul>
+                                                <li><span style="color: green;">{{ i }}:  ₹{{i.discount_price}} Discount</span></li>
+                                            
+                                              <!-- Add more coupon items as needed -->
+                                            </ul>
+                                            {% endfor %}
+                                            {% if wallet.discount %}
+                                            <div class="alert alert-success" role="alert">
+                                                Congratulations! Your referral code has been activated. You have a discount of ₹{{ wallet.discount }} in your wallet.
+                                            </div>
+                                        {% endif %}
+                                          </div>
+			            			</div><!-- End .cart-discount -->
+                                    
+
+			            			<a href="{% url 'cart' %}" class="btn btn-outline-dark-2"><span>NOW YOU ARE USING {{coupon}} COUPON </span><i class="icon-refresh"></i></a>
+		            			</div><!-- End .cart-bottom -->
+	                		</div><!-- End .col-lg-9 -->
+	                		<aside class="col-lg-3">
+	                			<div class="summary summary-cart">
+	                				<h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
+
+	                				<table class="table table-summary">
+	                					<tbody>
+	                						<tr class="summary-subtotal">
+                                                {% if grand_total %}
+	                							<td>Subtotal:</td>
+	                							<td class="subtotal-col" id="subtotal_amount">₹{{grand_total}}</td>
+                                                {% endif %}
+	                						</tr><!-- End .summary-subtotal -->
+	                						
+
+	                						<tr class="summary-shipping-estimate">
+                                                <div class="col-md-4">
+                                                    {% if address %}
+                                                   
+                                                        
+                                                            <div class="card mb-3">
+                                                                <div class="card-body">
+                                                                    <td>
+                                                                    <h6 class="card-title">Address</h6>
+                                                                    <p class="card-text">{{ address.username}}</p>
+                                                                    <p class="card-text">{{ address.address}}</p>
+                                                                    <p class="card-text">{{ address.city }}</p> 
+                                                                    <p class="card-text">{{ address.state }} </p>
+                                                                    <p class="card-text">{{ address.pincode }}</p>
+                                                                    </td>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            {% endif %}
+                                                        </div>
+                                                    </tr>
+                                                    <tr class="summary-shipping-estimate">
+	                							<td>Estimate for Your Country<br> <a href="{% url 'address' %}">Change address</a></td>
+	                							<td>&nbsp;</td>
+	                						</tr><!-- End .summary-shipping-estimate -->
+
+	                						<tr class="summary-total">
+                                                {% if grand_total %}
+	                							<td>Total:</td>
+	                							<td class="summary-total" id="endtotal_prices">₹{{grand_total}}</td>
+                                                {% endif %}
+	                						</tr><!-- End .summary-total -->
+	                					</tbody>
+	                				</table><!-- End .table table-summary -->
+                                    {% if not out_of_stock %}
+    <a href="{% url 'checkout' %}" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+{% endif %}
+                                </div><!-- End .summary -->
+                              
+		            			<a href="{% url 'all_products' %}" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+	                		</aside><!-- End .col-lg-3 -->
+	                	</div><!-- End .row -->
+	                </div><!-- End .container -->
+                </div><!-- End .cart -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+{% endblock %}
+{% block scripts %}
+
+    <!-- Plugins JS File -->
+    <script src="/media/js/jquery.min.js"></script>
+    <script src="/media/js/bootstrap.bundle.min.js"></script>
+    <script src="/media/js/jquery.hoverIntent.min.js"></script>
+    <script src="/media/js/jquery.waypoints.min.js"></script>
+    <script src="/media/js/superfish.min.js"></script>
+    <script src="/media/js/owl.carousel.min.js"></script>
+    <script src="/media/js/bootstrap-input-spinner.js"></script>
+    <!-- Main JS File -->
+    <script src="/media/js/alertify.min.js"></script> 
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    <script>alertify.set('notifier','position','top-right');</script>
+    <!-- Main JS File -->
+    <script src="/media/js/main.js"></script>
+    <script>
+        $(".btn-remove").on('click',function(){
+            console.log('hello')
+            
+            var _id=$(this).closest('.finding').find(".product_id").val();
+            var token= $('input[name=csrfmiddlewaretoken]').val();
+            console.log(_id);
+            
+            //ajax
+
+            $.ajax({
+                method:"POST",
+                url:'/cartify/delete_cart',
+                data:{
+                    'product_id':_id,
+                    csrfmiddlewaretoken: token
+                },
+                dataType:'json',
+                success: function(response){
+                console.log(response);
+                alertify.success(response.status);
+                location.reload();
+                }
+                
+                
+            });
+            //endajax
+            
+            
+        
+        })
+// change quantity
+
+$(document).ready(function() {
+    // Change quantity - Decrement button
+    $(document).on('click', '.btn-decrement', function() {
+        var $row = $(this).closest('.finding');
+        var _id = $row.data('product');
+        var $quantityValue = $row.find('.quantity-value');
+        var _qty = parseInt($quantityValue.text());
+        var _price = $row.find('.price-col:first').text().replace('₹', '');
+        var token = $('input[name=csrfmiddlewaretoken]').val();
+
+        if (_qty > 1) {
+            _qty--;
+            $quantityValue.text(_qty);
+            updateCart(_id, _qty, _price, token, $row);
+        }
+    });
+
+    // Change quantity - Increment button
+    $(document).on('click', '.btn-increment', function() {
+        var $row = $(this).closest('.finding');
+        var _id = $row.data('product');
+        var $quantityValue = $row.find('.quantity-value');
+        var _qty = parseInt($quantityValue.text());
+        var _price = $row.find('.price-col:first').text().replace('₹', '');
+        var token = $('input[name=csrfmiddlewaretoken]').val();
+
+        if (_qty < 10) {
+            _qty++;
+            $quantityValue.text(_qty);
+            updateCart(_id, _qty, _price, token, $row);
+        }
+    });
+
+    // Update cart
+    function updateCart(_id, _qty, _price, token, $row) {
+        var total = _qty * _price;
+
+        // AJAX
+        $.ajax({
+            method: 'POST',
+            url: '/cartify/update_cart',
+            data: {
+                'product_id': _id,
+                'qty': _qty,
+                'price': _price,
+                csrfmiddlewaretoken: token
+            },
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+                alertify.success(response.status);
+                location.reload();
+                $row.find('.total-col#total_prices').text('₹' + total.toFixed(2));
+
+                // Update the subtotal and total without reordering the rows
+                updateSubtotal();
+                updateTotal();
+                endupdateSubtotal();
+               
+            }
+        });
+        // End AJAX
+    }
+
+    // Update subtotal
+    function updateSubtotal() {
+        var $totals = $('.total-col#total_prices');
+        var subtotal = 0;
+
+        $totals.each(function() {
+            var price = parseFloat($(this).text().replace('₹', ''));
+            subtotal += price;
+        });
+
+        $('.subtotal-col#subtotal_amount').text('₹' + subtotal.toFixed(2));
+    }
+
+    // Update total
+    function updateTotal() {
+        var subtotal = parseFloat($('.subtotal-col#subtotal_amount').text().replace('₹', ''));
+        var total = subtotal; // You can add any additional calculations here if needed
+
+        $('.summary-total#endtotal_prices').text('₹' + total.toFixed(2));
+    }
+    function endupdateSubtotal() {
+        var $totals = $('.subtotal-col#subtotal_amount');
+        var endsubtotal = 0;
+
+        $totals.each(function() {
+            var endprice = parseFloat($(this).text().replace('₹', ''));
+            endsubtotal += endprice;
+        });
+
+        $('.summary-total#endtotal_prices').text('₹' + endsubtotal.toFixed(2));
+    }
+});
+
+
+
+
+$(document).ready(function() {
+    $('#coupon-form').on('submit', function(event) {
+        event.preventDefault();
+        var couponCode = $('#id_coupon_code').val();
+        console.log(couponCode)
+        $.ajax({
+            type: 'POST',
+            url: 'apply_coupon',  // URL of your apply_coupon view
+            data: {
+                'coupon_code': couponCode,
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+            },
+            dataType: 'json',
+            success: function(response) {
+            console.log(response);
+            alertify.success(response.status);
+            location.reload();
+        }
+           
+        });
+    });
+});
+
+    </script>
+ 
+    
+    {% endblock scripts %}

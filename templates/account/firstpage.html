@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/index-10.html  22 Nov 2019 09:58:04 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Skittish-Footwares</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/media/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/media/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/media/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="/media/images/icons/site.html">
+    <link rel="mask-icon" href="/media/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="/media/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="/media/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="/media/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/media/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="/media/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="/media/css/plugins/jquery.countdown.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/skins/skin-demo-10.css">
+    <link rel="stylesheet" href="/media/css/demos/demo-10.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .header-search .dropdown-menu {
+            background-color: #fff;
+            color: #000;
+        }
+        .header-search .dropdown-menu {
+            z-index: 9999;
+          }
+          .header-search .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+          }
+          .header-search {
+            position: relative;
+            z-index: 999;
+          }
+          
+          .header-search-wrapper .autocomplete-suggestions {
+            background-color: #f2f2f2; /* Set the desired background color for the suggestions */
+            /* Add any additional styles you want for the suggestions */
+        }
+        .extra-offer {
+            font-size: 12px;
+            color: #ff0000; /* Adjust the color as desired */
+            margin-left: 5px;
+          }
+          
+        
+            .ui-autocomplete {
+                position: absolute;
+                z-index: 9999;
+                background-color: #fff;
+                padding: 10px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+        
+            .ui-menu-item {
+                padding: 5px;
+            }
+        
+         
+          
+    </style>
+    
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="header header-8">
+            <div class="header-top">
+                <div class="container">
+
+                    <div class="header-right">
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul>
+                                    
+                                    
+                                    <li>
+                                        {% if wishlist %}
+                                        <a href="{% url 'wishlist' %}"><i class="icon-heart-o"></i>My Wishlist</a>
+                                        {% else %}
+                                        <a href="{% url 'wishlistempty' %}"><i class="icon-heart-o"></i>My Wishlist</a>
+                                        {% endif %}
+                                        </li>
+                                        <li><a href="{% url 'logout' %}">Logout ({{request.user.first_name}})</a></li>
+             
+                                </ul>
+                            </li>
+                        </ul><!-- End .top-menu -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-top -->
+
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="index.html" class="logo">
+                            <img src="https://res.cloudinary.com/zenbusiness/q_auto/v1/logaster/logaster-2019-02-0008-t-shoe-splash-logo.png" alt="Skittish Logo" width="105" height="25">
+                        </a>
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+                        <nav class="main-nav">
+                            <ul class="menu sf-arrows">
+                                <li class="megamenu-container active">
+                                    <a href="{% url 'indexpage' %} " class="sf-with-ul">Home</a>
+
+                                    
+                                </li>
+                                <li>
+                                    <a href="{% url 'all_products' %}" class="sf-with-ul">Shop</a>
+
+                                    
+                                </li>
+                                <li>
+                                    <a href="{% url 'all_products' %}" class="sf-with-ul">Product</a>
+
+                                    
+                                        
+                                </li>
+                                <li>
+                                    <a href="#" class="sf-with-ul">MY Account</a>
+
+                                    <ul>
+                                        
+                                        <li>
+                                            <a href="{% url 'user_profile' %}" class="sf-with-ul">Profile</a>
+
+                                        </li>
+                                    
+                                        <li>
+                                            <a href="{% url 'my_orders' %}" class="sf-with-ul">Orders</a>
+
+                                        </li>
+                                        <li>
+                                            
+                                            {% if wishlist %}
+                                            <a href="{% url 'wishlist' %}" class="sf-with-ul"></i>My Wishlist</a>
+                                            {% else %}
+                                            <a href="{% url 'wishlistempty' %}"class="sf-with-ul"></i>My Wishlist</a>
+                                            {% endif %}
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'coupon' %}" class="sf-with-ul">Coupon</a>
+
+                                        </li>
+                                
+                                       
+                                    </ul>
+                                </li>
+                                
+                                
+                               
+                            </ul><!-- End .menu -->
+                        </nav><!-- End .main-nav -->
+                        <div class="header-search">
+                            <a href="" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                            <form action="/search" method="get">
+                                <div class="header-search-wrapper" style="position: relative; z-index: 9999;">
+                                    <label for="q" class="sr-only">Search</label>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                                </div><!-- End .header-search-wrapper -->
+                            </form>
+                        </div><!-- End .header-search -->
+                        
+                        {% csrf_token %}
+                        <div class="dropdown cart-dropdown">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <i class="icon-shopping-cart"></i>
+                                <span class="cart-count"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                            
+                        {% if cart %}
+                        {% for i in cart %}
+                        <div class="dropdown-cart-products">
+                        <input type="hidden" value="{{i.product_id}}" class="product_id">
+                                    <div class="product">
+                                        <div class="product-cart-details">
+                                            <h4 class="product-title">
+                                                <a href="product.html">{{i.product.product_name}}</a>
+                                            </h4>
+
+                                            <span class="cart-product-info">
+                                            {% if i.productattr.quantity >= i.product_qty %}
+                                                <span class="cart-product-qty">{{i.product_qty}}</span>
+                                                x {{i.product_price}}
+                                            {% else %}
+                                                <h6> outof stock </h6>
+                                            {% endif %}    
+                                            </span>
+                                            
+                                            
+                                        </div><!-- End .product-cart-details -->
+                                        
+                                        <figure class="product-image-container">
+                                            {% if i.productattr.product_images.all %}
+                                            <a href="product.html" class="product-image">
+                                                <img src="/media/{{i.productattr.product_images.first.image}}"  alt="product">
+                                            </a>
+                                            {% endif %}
+                                        </figure>
+                                        <a href="" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                    </div><!-- End .product -->
+                                </div>
+                                    {% endfor %}
+                                    {% else %}
+                                    <h6> Your Cart is Empty </h6>
+                                    {% endif %}
+                                <div class="dropdown-cart-total">
+                                    {% if grand_total %}
+                                    <span>{{grand_total}}</span>
+
+                                    <span class="cart-total-price">{{grand_total}}</span>
+                                {% endif %}
+                                </div><!-- End .dropdown-cart-total -->
+
+                                <div class="dropdown-cart-action">
+                                    {% if cart %}
+                                    <a href="{% url 'cart' %}" class="btn btn-primary">View Cart</a>
+                                    {% else %}
+                                    <a href="{% url 'cartempty' %}" class="btn btn-primary">View Cart</a>
+                                    {% endif %}
+                                    <a href="{% url 'checkout' %}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .dropdown-cart-total -->
+                            </div><!-- End .dropdown-menu -->
+                        </div><!-- End .cart-dropdown -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-middle -->
+        </header><!-- End .header -->
+        {% if data %}
+        {% for front in data %}
+        
+        <main class="main">
+            <div class="container">
+                <div class="intro-slider-container slider-container-ratio mb-2">
+                    <div class="intro-slider owl-carousel owl-simple owl-light owl-nav-inside" data-toggle="owl" data-owl-options='{"nav": false}'>
+                        <div class="intro-slide">
+                            <figure class="slide-image">
+                                <picture>
+                                    <source media="(max-width: 480px)" srcset="assets/images/demos/demo-10/slider/slide-1-480w.jpg">
+                                    <img src="/media/front_image/1st_image.jpg" alt="Image Desc">
+                                </picture>
+                            </figure><!-- End .slide-image -->
+
+                            <div class="intro-content">
+                                <h3 class="intro-subtitle">{{front.heading}}</h3><!-- End .h3 intro-subtitle -->
+                                <h1 class="intro-title text-white">{{front.categ}}</h1><!-- End .intro-title -->
+
+                                <div class="intro-price text-white">from {{front.price}}</div><!-- End .intro-price -->
+
+                                <a href="{% url 'product_list' %}" class="btn btn-white-primary btn-round">
+                                    <span>SHOP NOW</span>
+                                    <i class="icon-long-arrow-right"></i>
+                                </a>
+                            </div><!-- End .intro-content -->
+                        </div><!-- End .intro-slide -->
+
+                    </div><!-- End .intro-slider owl-carousel owl-simple -->
+                    <span class="slider-loader"></span><!-- End .slider-loader -->
+                </div><!-- End .intro-slider-container -->
+            </div><!-- End .container -->
+            {% endfor %}
+            {% endif %}
+            <div class="banner-group">
+                <div class="container">
+                    <div class="row">
+                            
+                        {% if cat %}
+                        {% for i in cat %}
+                        <div class="col-sm-4">
+                            <div class="banner banner-overlay">
+                                <a href="#">
+                                    <img src="/media/{{i.category_image}}" alt="Banner">
+                                </a>
+
+                                <div class="banner-content banner-content-right" style="color: black;">
+                                    <h4 class="banner-subtitle"style="color: black;">{{i.tag}}</h4><!-- End .banner-subtitle -->
+                                    <h3 class="banner-title text-white" style="color: black;">{{i.category_name}}</h3><!-- End .banner-title -->
+                                   <a href={% url 'category_view' i.uid %} class="btn btn-outline-white banner-link btn-round" style="color: black;">Discover Now</a>
+                                </div><!-- End .banner-content -->
+                            </div><!-- End .banner -->
+                        </div><!-- End .col-sm-6 -->
+
+                        {% endfor %}
+                        {% endif %}
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+                       
+                   
+               
+            </div><!-- End .banner-group -->
+           
+            <div class="icon-boxes-container icon-boxes-separator bg-transparent">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-primary">
+                                    <i class="icon-rocket"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Free Shipping</h3><!-- End .icon-box-title -->
+                                    <p>Orders $50 or more</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+                        
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-primary">
+                                    <i class="icon-rotate-left"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Free Returns</h3><!-- End .icon-box-title -->
+                                    <p>Within 30 days</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-primary">
+                                    <i class="icon-info-circle"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Get 20% Off 1 Item</h3><!-- End .icon-box-title -->
+                                    <p>when you sign up</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-primary">
+                                    <i class="icon-life-ring"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">We Support</h3><!-- End .icon-box-title -->
+                                    <p>24/7 amazing services</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .icon-boxes-container -->
+
+<div class="bg-light pt-5 pb-10 mb-3">
+    <div class="container">
+        <div class="heading heading-center mb-3">
+            <h2 class="title-lg">New Arrivals</h2><!-- End .title -->
+                <ul class="nav nav-pills justify-content-center" role="tablist">
+                    <li class="nav-item">
+                                <a class="nav-link active" id="new-all-link" data-toggle="tab" href="#new-all-tab" role="tab" aria-controls="new-all-tab" aria-selected="true">All</a>
+                    </li>
+                    <li class="nav-item">
+                                <a class="nav-link" id="new-women-link" data-toggle="tab" href="#new-women-tab" role="tab" aria-controls="new-women-tab" aria-selected="false">Women's</a>
+                    </li>
+                    <li class="nav-item">
+                                <a class="nav-link" id="new-men-link" data-toggle="tab" href="#new-men-tab" role="tab" aria-controls="new-men-tab" aria-selected="false">Men's</a>
+                    </li>
+                </ul>
+        </div><!-- End .heading -->
+                    
+        <div class="tab-content">
+            <div class="tab-pane p-0 fade show active" id="top-all-tab" role="tabpanel" aria-labelledby="top-all-link">
+                <div class="products just-action-icons-sm">
+                    <div class="row">
+                        {% if new %}
+                        {% for i in new %}
+                        <div class="col-6 col-md-3 col-lg-3 col-xl-4col">
+                            <div class="product product-3 text-center">
+                                <figure class="product-media">
+                                    <span class="product-label label-primary">{{i.tag}}</span>
+                                   
+                                    <a href="{% url 'product_detail' i.uid %}">
+                                        
+                                        <img src="/media/{{ i.productattribute_set.first.product_images.first.image}}" alt="Product image" class="product-image">
+                                    </a>
+                                 
+                                    <div class="product-action-vertical">
+                                        <a href="{% url 'add_wishlist' %}" class="btn-product btn-wishlist" id="addwishlist"><span>Add to Wishlist</span></a>
+                                    </div><!-- End .product-action-vertical -->
+                                </figure><!-- End .product-media -->
+
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="#">{{i.category}}</a>,
+                                        
+                                    </div><!-- End .product-cat -->
+                                    <h3 class="product-title"><a href="{% url 'product_detail' i.uid %}">{{i.product_name}}</a></h3><!-- End .product-title -->
+                                    <div class="product-price">
+                                        <span class="new-price">Now ₹{{i.productattribute_set.first.selling_price}}</span>
+                                        <span class="old-price">₹{{i.productattribute_set.first.orginal_price}}</span>
+                                        {% if i.category.offer %}
+                                        <span class="extra-offer">({{i.category.offer}}% off)</span>
+                                        {% endif %}
+                                      </div>
+                                </div><!-- End .product-body -->
+
+                                <div class="product-footer">
+                                    <div class="ratings-container">
+                                        <ul >
+                                            <li>
+                                                {% for j in iterator %}
+                                                {% if i.average_rating >= j %}
+                                                        <i class="fa fa-star star-filled" aria-hidden="true" style="color:#ef837b; !important;"></i>
+                                                    {% else %}
+                                                        <i class="fa fa-star star-empty" aria-hidden="true" style="color: grey !important;"></i>
+                                                    {% endif %}
+                                                   
+                                                {% endfor %}
+                                            </li>
+                                            
+                                        </ul>
+                                        <span class="ratings-text"> ({{i.review_count}} reviews) </span>
+                                    </div><!-- End .rating-container -->
+
+                                   
+
+                                    <div class="product-action">
+                                        <a href="{% url 'product_detail' i.uid %}" class="btn-product btn-cart" id="addtocart"><span>add to cart</span></a>
+                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                    </div><!-- End .product-action -->
+                                </div><!-- End .product-footer -->
+                            </div><!-- End .product -->
+                        </div><!-- End .col-6 col-md-4 col-lg-3 -->
+
+                       {% endfor %}
+                       {% endif %}
+                       
+                    </div><!-- End .row -->
+                </div><!-- End .products -->
+            </div><!-- .End .tab-pane -->
+        </div>
+    </div>
+</div>
+                                    
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-sm-6 col-md-4">
+                        {% if gen %}
+                        {% for i in gen %}
+                        <div class="banner banner-cat">
+                           
+                            <a href="#">
+                                <img src="/media/{{i.gender_image}}" alt="Banner">
+                            </a>
+
+                            <div class="banner-content banner-content-overlay text-center">
+                                <h3 class="banner-title font-weight-normal">{{i.gender_name}}</h3><!-- End .banner-title -->
+                               <a href="{% url 'gender_view' i.uid%}">SHOP NOW</a>
+
+
+                               
+                            </div><!-- End .banner-content -->
+                        </div><!-- End .banner -->
+                    </div><!-- End .col-md-4 -->
+
+                    {% endfor %}
+                    {% endif %}
+
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+            <div class="mb-4"></div><!-- End .mb-4 -->
+
+            <div class="container">
+                <div class="heading heading-center mb-3">
+                    <h2 class="title-lg mb-2">All Products</h2><!-- End .title-lg text-center -->
+
+                    <ul class="nav nav-pills justify-content-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="top-all-link" data-toggle="tab" href="#top-all-tab" role="tab" aria-controls="top-all-tab" aria-selected="true">All</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="top-women-link" data-toggle="tab" href="#top-women-tab" role="tab" aria-controls="top-women-tab" aria-selected="false">Women's</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="top-men-link" data-toggle="tab" href="#top-men-tab" role="tab" aria-controls="top-men-tab" aria-selected="false">Men's</a>
+                        </li>
+                    </ul>
+                </div><!-- End .heading -->
+
+                <div class="tab-content">
+                    <div class="tab-pane p-0 fade show active" id="top-all-tab" role="tabpanel" aria-labelledby="top-all-link">
+                        <div class="products just-action-icons-sm">
+                            <div class="row">
+                                {% if all_products %}
+                                {% for i in all_products %}
+                                <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
+                                    <div class="product product-3 text-center">
+                                        <figure class="product-media">
+                                            <span class="product-label label-primary">{{i.tag}}</span>
+                                           
+                                            <a href="{% url 'product_detail' i.uid %}">
+                                                <img src="/media/{{ i.productattribute_set.first.product_images.first.image}}" alt="Product image" class="product-image">
+                                            </a>
+
+                                            <div class="product-action-vertical">
+                                                <a href="{% url 'add_wishlist' %}" class="btn-product btn-wishlist" id="addwishlist"><span>Add to Wishlist</span></a>
+                                            </div><!-- End .product-action-vertical -->
+                                        </figure><!-- End .product-media -->
+
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#">{{i.category}}</a>,
+                                                
+                                            </div><!-- End .product-cat -->
+                                            <h3 class="product-title"><a href="{% url 'product_detail' i.uid %}">{{i.product_name}}</a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                                <span class="new-price">Now ₹{{i.productattribute_set.first.selling_price}}</span>
+                                                <span class="old-price">₹{{i.productattribute_set.first.orginal_price}}</span>
+                                                {% if i.category.offer %}
+                                                <span class="extra-offer">({{i.category.offer}}% off)</span>
+                                                {% endif %}
+                                            </div><!-- End .product-price -->
+                                        </div><!-- End .product-body -->
+
+                                        <div class="product-footer">
+                                            <div class="ratings-container">
+                                                <ul >
+                                                    <li>
+                                                        {% for j in iterator %}
+                                                        {% if i.average_rating >= j %}
+                                                                <i class="fa fa-star star-filled" aria-hidden="true" style="color:#ef837b; !important;"></i>
+                                                            {% else %}
+                                                                <i class="fa fa-star star-empty" aria-hidden="true" style="color: grey !important;"></i>
+                                                            {% endif %}
+                                                           
+                                                        {% endfor %}
+                                                    </li>
+                                                    
+                                                </ul>
+                                                <span class="ratings-text"> ({{i.review_count}} reviews) </span>
+                                            </div><!-- End .rating-container -->
+                                           
+                                    
+                                            <div class="product-action">
+                                                <a href="{% url 'product_detail' i.uid %}" class="btn-product btn-cart" id="addtocart"><span>add to cart</span></a>
+                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                            </div><!-- End .product-action -->
+                                        </div><!-- End .product-footer -->
+                                    </div><!-- End .product -->
+                                </div><!-- End .col-6 col-md-4 col-lg-3 -->
+
+                               {% endfor %}
+                               {% endif %}
+                               
+                            </div><!-- End .row -->
+                        </div><!-- End .products -->
+                    </div><!-- .End .tab-pane -->
+                
+
+                    <div class="more-container text-center mt-5">
+                        <a href="{% url 'all_products' %}" class="btn btn-outline-lightgray btn-more btn-round"><span>View more products</span><i class="icon-long-arrow-right"></i></a>
+                    </div><!-- End .more-container -->
+                </div><!-- End .container -->                   
+
+        <footer class="footer footer-dark">
+            <div class="cta bg-image bg-dark pt-4 pb-5 mb-0" style="background-image: url(/media/images/demos/demo-10/bg-2.jpg);">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-10 col-md-8 col-lg-6">
+                            <div class="cta-heading text-center">
+                                <h3 class="cta-title text-white">Subscribe for Our Newsletter</h3><!-- End .cta-title -->
+                                <p class="cta-desc text-white">and receive <span class="font-weight-normal">$20 coupon</span> for first shopping</p><!-- End .cta-desc -->
+                            </div><!-- End .text-center -->
+                        
+                            <form action="#">
+                                <div class="input-group input-group-round">
+                                    <input type="email" class="form-control form-control-white" placeholder="Enter your Email Address" aria-label="Email Adress" required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-white" type="submit"><span>Subscribe</span><i class="icon-long-arrow-right"></i></button>
+                                    </div><!-- .End .input-group-append -->
+                                </div><!-- .End .input-group -->
+                            </form>
+                        </div><!-- End .col-sm-10 col-md-8 col-lg-6 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .cta -->
+            <div class="footer-middle">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="widget widget-about">
+                                <img src="https://res.cloudinary.com/zenbusiness/q_auto/v1/logaster/logaster-2019-02-0008-t-shoe-splash-logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                                <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+
+                                <div class="social-icons">
+                                    <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                    <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                    <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                                    <a href="#" class="social-icon" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
+                                    <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                                </div><!-- End .soial-icons -->
+                            </div><!-- End .widget about-widget -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="widget">
+                                <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+                                <ul class="widget-list">
+                                    <li><a href="about.html">About Skittish</a></li>
+                                    <li><a href="#">How to shop on Skittish</a></li>
+                                    <li><a href="faq.html">FAQ</a></li>
+                                    <li><a href="contact.html">Contact us</a></li>
+                                    <li><a href="login.html">Log in</a></li>
+                                </ul><!-- End .widget-list -->
+                            </div><!-- End .widget -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="widget">
+                                <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+                                <ul class="widget-list">
+                                    <li><a href="#">Payment Methods</a></li>
+                                    <li><a href="#">Money-back guarantee!</a></li>
+                                    <li><a href="#">Returns</a></li>
+                                    <li><a href="#">Shipping</a></li>
+                                    <li><a href="#">Terms and conditions</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                </ul><!-- End .widget-list -->
+                            </div><!-- End .widget -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="widget">
+                                <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+                                <ul class="widget-list">
+                                    <li><a href="#">Sign In</a></li>
+                                    <li><a href="cart.html">View Cart</a></li>
+                                    <li><a href="#">My Wishlist</a></li>
+                                    <li><a href="#">Track My Order</a></li>
+                                    <li><a href="#">Help</a></li>
+                                </ul><!-- End .widget-list -->
+                            </div><!-- End .widget -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .footer-middle -->
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <p class="footer-copyright">Copyright © 2019 Skittish Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+                    <figure class="footer-payments">
+                        <img src="/media/images/payments.png" alt="Payment methods" width="272" height="20">
+                    </figure><!-- End .footer-payments -->
+                </div><!-- End .container -->
+            </div><!-- End .footer-bottom -->
+        </footer><!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-wrapper">
+            <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+            <form action="#" method="get" class="mobile-search">
+                <label for="mobile-search" class="sr-only">Search</label>
+                <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
+                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+            </form>
+            
+            <nav class="mobile-nav">
+                <ul class="mobile-menu">
+                    
+                    <li>
+                        <a href="{% url 'indexpage' %} " class="sf-with-ul">Home</a>
+                      
+                    </li>
+                    <li>
+                        <a href="{% url 'all_products' %}" class="sf-with-ul">Shop</a>
+                
+                    </li>
+                    <li>
+                        <a href="{% url 'all_products' %}" class="sf-with-ul">Product</a>
+                    
+                    </li>
+                    <li>
+                        <a href="#" class="sf-with-ul">MY Account</a>
+
+                                 <ul>
+                                        
+                                        <li>
+                                            <a href="{% url 'user_profile' %}" class="sf-with-ul">Profile</a>
+
+                                        </li>
+                                    
+                                        <li>
+                                            <a href="{% url 'my_orders' %}" class="sf-with-ul">Orders</a>
+
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'wishlist' %}" class="sf-with-ul">Whishlist</a>
+
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'coupon' %}" class="sf-with-ul">Coupon</a>
+
+                                        </li>
+                                
+                                       
+                                    </ul>
+                                </li>
+               
+                </ul>
+            </nav><!-- End .mobile-nav -->
+
+            <div class="social-icons">
+                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+            </div><!-- End .social-icons -->
+        </div><!-- End .mobile-menu-wrapper -->
+    </div><!-- End .mobile-menu-container -->
+
+
+    <!-- Plugins JS File -->
+    <script src="/media/js/jquery.min.js"></script>
+    <script src="/media/js/bootstrap.bundle.min.js"></script>
+    <script src="/media/js/jquery.hoverIntent.min.js"></script>
+    <script src="/media/js/jquery.waypoints.min.js"></script>
+    <script src="/media/js/superfish.min.js"></script>
+    <script src="/media/js/owl.carousel.min.js"></script>
+    <script src="/media/js/bootstrap-input-spinner.js"></script>
+    <script src="/media/js/jquery.plugin.min.js"></script>
+    <script src="/media/js/jquery.magnific-popup.min.js"></script>
+    <script src="/media/js/jquery.countdown.min.js"></script>
+    <!-- Main JS File -->
+    <script src="/media/js/main.js"></script>
+    <script src="/media/js/demos/demo-10.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <script>
+        $("#addtocart").on('click',function(){
+            console.log('hello')
+            var _id=$(this).closest('.product-details-top').find(".product_id").val();
+            var _qty=$(this).closest('.product-details-top').find("#productQty").val();
+            var _productTitle=$(this).closest('.product-details-top').find(".product-title").val();
+            var _size=document.querySelector(".choose-size").innerText;
+            var _productprice=document.querySelector('.product-price').innerText;
+            var _productimage=$(this).closest('.product-details').find(".choose-color").val();
+            var token= $('input[name=csrfmiddlewaretoken]').val();
+            console.log(_id);
+            console.log(_qty);
+            console.log(_productTitle);
+            console.log(_productprice); 
+            console.log(_size); 
+            console.log(_productimage)
+           
+            //ajax
+
+            $.ajax({
+                method:"POST",
+                url:'/cartify/add_cart',
+                data:{
+                    'product_id':_id,
+                    'qty':_qty,
+                    'title':_productTitle,
+                    'price':_productprice,
+                    'size':_size,
+                    csrfmiddlewaretoken: token
+                },
+                dataType:'json',
+                success: function(response){
+                    console.log(response);
+                        alertify.success(response.status);
+                   
+                }
+                
+                
+            });
+            //endajax
+            
+            
+        
+        })
+    </script>
+        //add wishlist
+<script>
+    $("#addwishlist").on('click',function(){
+        console.log('hello')
+        var _id=$(this).closest('.product-details-top').find(".product_id").val();
+        var _qty=$(this).closest('.product-details-top').find("#productQty").val();
+        var _productTitle=$(this).closest('.product-details-top').find(".product-title").val();
+        var _size=document.querySelector(".choose-size").innerText;
+        var _productprice=document.querySelector('.product-price').innerText;
+        var _productimage=$(this).closest('.product-details').find(".choose-color").val();
+        var token= $('input[name=csrfmiddlewaretoken]').val();
+        console.log(_id);
+        console.log(_qty);
+        console.log(_productTitle);
+        console.log(_productprice); 
+        console.log(_size); 
+        console.log(_productimage)
+       
+        //ajax
+
+        $.ajax({
+            method:"POST",
+            url:'/wishlist/add_wishlist',
+            data:{
+                'product_id':_id,
+                'qty':_qty,
+                'title':_productTitle,
+                'price':_productprice,
+               
+                csrfmiddlewaretoken: token
+            },
+            dataType:'json',
+            success: function(response){
+                console.log(response);
+                    alertify.success(response.status);
+               
+            }
+            
+            
+        });
+        //endajax
+        
+        
+    
+    })
+</script>
+
+<script>
+    $(function() {
+        $("#q").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    method: "GET",
+                    url: "/search",
+                    data: {
+                        q: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            select: function(event, ui) {
+                window.location.href = "/search/results?q=" + ui.item.value;
+            }
+        });
+    });
+</script>
+
+
+</body>
+
+
+<!-- molla/index-10.html  22 Nov 2019 09:58:22 GMT -->
+</html>

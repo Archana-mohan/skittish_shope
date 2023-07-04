@@ -1,0 +1,47 @@
+
+{% if data %}
+{% for i in data %}
+<div class="col-6 col-md-4 col-lg-4 product-box"> 
+    <div class="product product-7 text-center">
+        <figure class="product-media">
+            <span class="product-label label-new">{{i.tag}}</span>
+            <a href="{% url 'product_detail' i.uid %}">
+                <img src="/media/{{ i.productattribute_set.first.product_images.first.image}}" alt="Product image" class="product-image">
+            </a>
+            <div class="product-action-vertical">
+                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+             
+            </div><!-- End .product-action-vertical -->
+
+            <div class="product-action">
+                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+            </div><!-- End .product-action -->
+        </figure><!-- End .product-media -->
+        
+        <div class="product-body">
+            <div class="product-cat">
+                <a href="#">{{i.gender}}</a>
+            </div><!-- End .product-cat -->
+            <h3 class="product-title"><a href="{% url 'product_detail' i.uid %}">{{i.product_name}}</a></h3><!-- End .product-title -->
+            <div class="product-price">
+                <span class="new-price">Now ₹{{i.productattribute_set.first.selling_price}}</span>
+                <span class="old-price">₹{{i.productattribute_set.first.orginal_price}}</span>
+            </div><!-- End .product-price -->
+          
+
+            <div class="product-nav product-nav-thumbs">
+                {% for img in  i.productattribute.product_images__image.all %}
+                <a href="#" class="active">
+                    <img src="/media/{{i.img}}" alt="product desc">
+                </a>
+               
+                {% endfor%}
+               
+            </div><!-- End .product-nav -->
+        </div><!-- End .product-body -->
+   
+    </div>  
+ </div>
+     {% endfor %}
+    {% endif %}

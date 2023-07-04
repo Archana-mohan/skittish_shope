@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/index-10.html  22 Nov 2019 09:58:04 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Skittish-Footwares</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/media/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/media/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/media/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="/media/images/icons/site.html">
+    <link rel="mask-icon" href="/media/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="/media/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="/media/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="/media/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/media/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="/media/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="/media/css/plugins/jquery.countdown.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/skins/skin-demo-10.css">
+    <link rel="stylesheet" href="/media/css/demos/demo-10.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    .star-filled {
+        color: #ef837b; !important;
+    }
+    
+    .star-empty {
+        color: gray !important;
+    }
+    
+  
+</style>
+</head> 
+<body>
+    <div class="page-wrapper">
+        <header class="header header-8">
+            <div class="header-top">
+                <div class="container">
+
+                    <div class="header-right">
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul>
+                                    <li>
+                                    {% if wishlist %}
+                                    <a href="{% url 'wishlist' %}"><i class="icon-heart-o"></i>My Wishlist</a>
+                                    {% else %}
+                                    <a href="{% url 'wishlistempty' %}"><i class="icon-heart-o"></i>My Wishlist</a>
+                                    {% endif %}
+                                    </li>
+                                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul><!-- End .top-menu -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-top -->
+
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="index.html" class="logo">
+                            <img src="https://res.cloudinary.com/zenbusiness/q_auto/v1/logaster/logaster-2019-02-0008-t-shoe-splash-logo.png" alt="Skittish Logo" width="105" height="25">
+                        </a>
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+                        <nav class="main-nav">
+                            <ul class="menu sf-arrows">
+                                <li class="megamenu-container active">
+                                    <a href="{% url 'indexpage' %} " class="sf-with-ul">Home</a>
+
+                                    
+                                </li>
+                                <li>
+                                    <a href="{% url 'all_products' %}" class="sf-with-ul">Shop</a>
+
+                                    
+                                </li>
+                                <li>
+                                    <a href="{% url 'all_products' %}" class="sf-with-ul">Product</a>
+
+                                    
+                                        
+                                </li>
+                                <li>
+                                    <a href="#" class="sf-with-ul">MY Account</a>
+
+                                    <ul>
+                                        
+                                        <li>
+                                            <a href="{% url 'user_profile' %}" class="sf-with-ul">Profile</a>
+
+                                        </li>
+                                    
+                                        <li>
+                                            <a href="{% url 'my_orders' %}" class="sf-with-ul">Orders</a>
+
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'wishlist' %}" class="sf-with-ul">Whishlist</a>
+
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'coupon' %}" class="sf-with-ul">Coupon</a>
+
+                                        </li>
+                                
+                                       
+                                    </ul>
+                                </li>
+                                
+                                
+                               
+                            </ul><!-- End .menu -->
+                        </nav><!-- End .main-nav -->
+
+                        <div class="header-search">
+                            <a href="" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                            <form action="/search" method="get">
+                                <div class="header-search-wrapper">
+                                    <label for="q" class="sr-only">Search</label>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                                </div><!-- End .header-search-wrapper -->
+                            </form>
+                        </div><!-- End .header-search -->
+
+                        {% csrf_token %}
+                        <div class="dropdown cart-dropdown">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <i class="icon-shopping-cart"></i>
+                                <span class="cart-count"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                            
+                        {% if cart %}
+                        {% for i in cart %}
+                        <div class="dropdown-cart-products">
+                        <input type="hidden" value="{{i.product_id}}" class="product_id">
+                                    <div class="product">
+                                        <div class="product-cart-details">
+                                            <h4 class="product-title">
+                                                <a href="product.html">{{i.product.product_name}}</a>
+                                            </h4>
+
+                                            <span class="cart-product-info">
+                                            {% if i.productattr.quantity >= i.product_qty %}
+                                                <span class="cart-product-qty">{{i.product_qty}}</span>
+                                                x {{i.product_price}}
+                                            {% else %}
+                                                <h6> outof stock </h6>
+                                            {% endif %}    
+                                            </span>
+                                            
+                                            
+                                        </div><!-- End .product-cart-details -->
+                                        
+                                        <figure class="product-image-container">
+                                            {% if i.productattr.product_images.all %}
+                                            <a href="product.html" class="product-image">
+                                                <img src="/media/{{i.productattr.product_images.first.image}}"  alt="product">
+                                            </a>
+                                            {% endif %}
+                                        </figure>
+                                        <a href="" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                    </div><!-- End .product -->
+                                </div>
+                                    {% endfor %}
+                                    {% else %}
+                                    <h6> Your Cart is Empty </h6>
+                                    {% endif %}
+                                <div class="dropdown-cart-total">
+                                    {% if grand_total %}
+                                    <span>{{grand_total}}</span>
+
+                                    <span class="cart-total-price">{{grand_total}}</span>
+                                {% endif %}
+                                </div><!-- End .dropdown-cart-total -->
+
+                                <div class="dropdown-cart-action">
+                                    {% if cart %}
+                                    <a href="{% url 'cart' %}" class="btn btn-primary">View Cart</a>
+                                    {% else %}
+                                    <a href="{% url 'cartempty' %}" class="btn btn-primary">View Cart</a>
+                                    {% endif %}
+                                    <a href="{% url 'checkout' %}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .dropdown-cart-total -->
+                            </div><!-- End .dropdown-menu -->
+                        </div><!-- End .cart-dropdown -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-middle -->
+        </header><!-- End .header -->
+
+
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container d-flex align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"> <a href="{% url 'indexpage' %} " class="sf-with-ul">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'all_products' %}" class="sf-with-ul">Product</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Default</li>
+                    </ol>
+
+          
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="container">
+                     {% csrf_token %}
+                    <div class="product-details-top">
+                        <div class="row">
+                           {% if data%}
+                            {% for i in data %}   
+                            <div class="col-md-6">    
+                                <input type="hidden" value="{{i.uid}}" class="product_id">
+
+                                <div class="product-gallery product-gallery-vertical">    
+                                   
+                                    <div class="row">   
+                                        <figure class="product-main-image"> 
+                                            
+                                            <img id="product-zoom" src="/media/{{ i.productattribute_set.first.product_images.first.image}}" data-zoom-image="/media/{{ i.productattribute_set.first.product_images.first.image}}" alt="product image" id="selected-image">
+                                            
+                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                                <i class="icon-arrows"></i>
+                                            </a>
+                                        </figure><!-- End .product-main-image -->
+                                     
+                                        <div id="product-zoom-gallery" class="product-image-gallery">
+                                            {% for image in i.productattribute_set.first.product_images.all %}
+                                                <a class="product-gallery-item active" href="#" data-image="/media/{{image.image}}" data-zoom-image="/media/{{image.image}}" data-color="{{image.colorVariant.uid}}">
+                                                    <img src="/media/{{image.image}}" alt="product side"  id="selected-image">
+                                                    
+                                                </a>
+                                            {% endfor %}
+                                        </div>
+                                        <!-- End .product-image-gallery --> 
+                                        
+                                   
+                                    </div><!-- End .row -->
+                                </div><!-- End .product-gallery -->
+                            </div><!-- End .col-md-6 -->
+
+                            <div class="col-md-6">
+                                <div class="product-details">
+                                    <h1 class="product-title">{{i.product_name}}</h1><!-- End .product-title -->
+
+                                    <div class="ratings-container">
+                                        <ul >
+                                            <li>
+                                                {% for j in iterator %}
+                                                {% if rounded_average_rating >= j %}
+                                                        <i class="fa fa-star star-filled" aria-hidden="true" style="color:#ef837b; !important;"></i>
+                                                    {% else %}
+                                                        <i class="fa fa-star star-empty" aria-hidden="true" style="color: grey !important;"></i>
+                                                    {% endif %}
+                                                   
+                                                {% endfor %}
+                                            </li>
+                                            
+                                        </ul>
+                                        <span class="ratings-text"> ({{reviews_count}} reviews) </span>
+                                    </div><!-- End .rating-container -->
+                                    <span class="product-price">
+                                        ₹{{i.productattribute_set.first.selling_price}}
+                                    </span><!-- End .product-price -->
+                                </div >
+                                <div class="product_details_widget">
+                                <span>Availability:</span>
+                                <div class="stock__checkbox">
+                                    
+                                    <label class="instock" for="stockin" style="color:green">
+                                        In Stock
+                                    </label>
+                                    
+                                    <label class="outofstock" for="stockin" style="color:red">
+                                        Out of Stock
+                                        <input type="checkbox" id="stockin">
+                                    
+                                    
+                                </div>
+                                <label class="limitedstock" for="stockin" style="color:rgb(11, 26, 57);size: 5px;">
+                                    limited stock </label>
+                                    <div class="product-content">
+                                        <p>{{i.Detail_desription}} </p>
+                                    </div><!-- End .product-content -->
+                                     
+                                    <div class="details-filter-row ">
+                                        <label>Color:</label> 
+                                        <div class="select-custom-color">  
+                                        {% for color in colors %}
+                                        <input type="hidden" id="default-quantity"  value="{{color.quantity}}" />
+							        <button class="btn btn-lg choose-color"  data-quantity="{{color.quantity}}" data-color="{{color.colorVariant__uid}}" data-product-attribute="{{color.uid}}" style="background-color: {{color.colorVariant__color_code}}"></button>
+						            {% endfor %}       
+                                </div><!-- End .select-custom -->
+                                    </div><!-- End .details-filter-row -->
+                                   
+                                    <div class="details-filter-row details-row-size">
+                                        
+                                        <label for="size">Size:</label> 
+                                         
+                                        <div class="select-custom">
+                                            <input type="hidden" id="default-quantity"  value="{{sizes.quantity}}" />
+                                                {% for size in sizes %}
+                                                <input type="hidden" value="{{size.uid}}" class="productatt_id">
+                                                <button  data-price="{{size.selling_price}}"  data-quantity="{{size.quantity}}" data-size='{{size.sizevariant__uid}}' id="sizevar" class="btn btn-outline-secondary btn-sm choose-size img{{size.colorVariant__uid}}">{{size.sizevariant__size_name}}</button>
+                                                {% endfor %}                  
+                                        </div><!-- End .select-custom -->
+                                        
+
+                                        <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
+                                    </div><!-- End .details-filter-row -->
+
+                                    <div class="details-filter-row details-row-size">
+                                        <label for="qty">Qty:</label>
+                                        <div class="product-details-quantity">
+                                            <input type="number" id="productQty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                        </div><!-- End .product-details-quantity -->
+                                    </div><!-- End .details-filter-row -->
+                                    {% csrf_token %}
+                                    <div class="product-details-action">
+                                     
+                                        
+                                        <a href="{% url 'add_cart' %}" class="btn-product btn-cart" id="addtocart"><span>add to cart</span></a>
+                                        
+                                        <div class="details-action-wrapper">
+                                            <a href="{% url 'add_wishlist' %}" class="btn-product btn-wishlist" id="addwishlist"><span>Add to Wishlist</span></a>
+                                          
+                                        </div><!-- End .details-action-wrapper -->
+                                    </div><!-- End .product-details-action -->
+
+                                    <div class="product-details-footer">
+                                        <div class="product-cat">
+                                            <span>Category:</span>
+                                            <a href="#">{{i.gender.gender_name}}</a>,
+                                            <a href="#">{{i.category.category_name}}</a>,
+                                            <a href="#">{{i.color__color_name}}</a>
+                                            <a href="#">{{i.sizevariant__size_name}}</a>
+                                        </div><!-- End .product-cat -->
+
+                                        <div class="social-icons social-icons-sm">
+                                            <span class="social-label">Share:</span>
+                                            <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                            <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                            <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                                            <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                                        </div>
+                                    </div><!-- End .product-details-footer -->
+                                </div><!-- End .product-details -->
+                            </div><!-- End .col-md-6 -->
+                          
+                        </div><!-- End .row --> 
+                        
+                    </div><!-- End .product-details-top -->
+                    <div class="bg-light pt-5 pb-10 mb-3">
+                        <div class="container">
+                            <div class="heading heading-center mb-3">
+                                <h2 class="title-lg">Related Products</h2><!-- End .title -->
+                                   
+                            </div><!-- End .heading -->
+                                        
+                            <div class="tab-content">
+                                <div class="tab-pane p-0 fade show active" id="top-all-tab" role="tabpanel" aria-labelledby="top-all-link">
+                                    <div class="products just-action-icons-sm">
+                                        <div class="row">
+                                            {% if related_product %}
+                                            {% for i in related_product %}
+                                            <div class="col-6 col-md-3 col-lg-3 col-xl-4col">
+                                                <div class="product product-3 text-center">
+                                                    <figure class="product-media">
+                                                        <span class="product-label label-primary">{{i.tag}}</span>
+                                                       
+                                                        <a href="{% url 'product_detail' i.uid %}">
+                                                            
+                                                            <img src="/media/{{ i.productattribute_set.first.product_images.first.image}}" alt="Product image" class="product-image">
+                                                        </a>
+                                                     
+                                                        <div class="product-action-vertical">
+                                                            <a href="{% url 'add_wishlist' %}" class="btn-product btn-wishlist" id="addwishlist"><span>Add to Wishlist</span></a>
+                                                        </div><!-- End .product-action-vertical -->
+                                                    </figure><!-- End .product-media -->
+                    
+                                                    <div class="product-body">
+                                                        <div class="product-cat">
+                                                            <a href="#">{{i.category}}</a>,
+                                                            
+                                                        </div><!-- End .product-cat -->
+                                                        <h3 class="product-title"><a href="{% url 'product_detail' i.uid %}">{{i.product_name}}</a></h3><!-- End .product-title -->
+                                                        <div class="price">
+                                                            <span class="new-price">Now ₹{{i.productattribute_set.first.selling_price}}</span>
+                                                            <span class="old-price">₹{{i.productattribute_set.first.orginal_price}}</span>
+                                                        </div><!-- End .product-price -->
+                                                    </div><!-- End .product-body -->
+                    
+                                                    <div class="product-footer">
+                                                        
+                                    <div class="ratings-container">
+                                        <ul >
+                                            <li>
+                                                {% for j in iterator %}
+                                                {% if rounded_average_rating >= j %}
+                                                        <i class="fa fa-star star-filled" aria-hidden="true" style="color:#ef837b; !important;"></i>
+                                                    {% else %}
+                                                        <i class="fa fa-star star-empty" aria-hidden="true" style="color: grey !important;"></i>
+                                                    {% endif %}
+                                                   
+                                                {% endfor %}
+                                            </li>
+                                            
+                                        </ul>
+                                        <span class="ratings-text"> ({{reviews_count}} reviews) </span>
+                    
+                                    </div>            
+                    
+                                                        <div class="product-action">
+                                                            <a href="{% url 'add_cart' %}" class="btn-product btn-cart" id="addtocart"><span>add to cart</span></a>
+                                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                                        </div><!-- End .product-action -->
+                                                    </div><!-- End .product-footer -->
+                                                </div><!-- End .product -->
+                                            </div><!-- End .col-6 col-md-4 col-lg-3 -->
+                    
+                                           {% endfor %}
+                                           {% endif %}
+                                           
+                                        </div><!-- End .row -->
+                                    </div><!-- End .products -->
+                                </div><!-- .End .tab-pane -->
+                            </div>
+                        </div>
+                    </div>
+                                
+
+                    <div class="product-details-tab">
+                        <ul class="nav nav-pills justify-content-center" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">Additional information</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews ({{reviews_count}})</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
+                                <div class="product-desc-content">
+                                    <h3>Product Information</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
+                                    <ul>
+                                        <li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit. </li>
+                                        <li>Vivamus finibus vel mauris ut vehicula.</li>
+                                        <li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>
+                                    </ul>
+
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
+                                </div><!-- End .product-desc-content -->
+                            </div><!-- .End .tab-pane -->
+                            <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
+                                <div class="product-desc-content">
+                                    <h3>Information</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. </p>
+
+                                    <h3>Fabric & care</h3>
+                                    <ul>
+                                        <li>Faux suede fabric</li>
+                                        <li>Gold tone metal hoop handles.</li>
+                                        <li>RI branding</li>
+                                        <li>Snake print trim interior </li>
+                                        <li>Adjustable cross body strap</li>
+                                        <li> Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>
+                                    </ul>
+
+                                    <h3>Size</h3>
+                                    <p>one size</p>
+                                </div><!-- End .product-desc-content -->
+                            </div><!-- .End .tab-pane -->
+                            <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
+                                <div class="product-desc-content">
+                                    <h3>Delivery & returns</h3>
+                                    <p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our <a href="#">Delivery information</a><br>
+                                    We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our <a href="#">Returns information</a></p>
+                                </div><!-- End .product-desc-content -->
+                            </div><!-- .End .tab-pane -->
+                            <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
+                                <div class="reviews">
+                                  <h3>Reviews ({{ reviews_count }})</h3>
+                                  <div class="review">
+                                    {% if reviews_on_product %}
+                                      {% for review in reviews_on_product %}
+                                        <div class="row no-gutters">
+                                          <div class="col-auto">
+                                            <h4><a href="#">{{ review.user.first_name }}</a></h4>
+                                            <div >
+                                                <ul >
+                                                    <li>
+                                                        {% for i in iterator %}
+                                                        {% if review.rating >= i %}
+                                                                <i class="fa fa-star star-filled" aria-hidden="true" style="color:#ef837b; !important;"></i>
+                                                            {% else %}
+                                                                <i class="fa fa-star star-empty" aria-hidden="true" style="color: grey !important;"></i>
+                                                            {% endif %}
+                                                           
+                                                        {% endfor %}
+                                                    </li>
+                                                    
+                                                </ul>
+                                            </div><!-- End .rating-container -->
+                                            
+                                            <span class="review-date">{{ review.added_at }}</span>
+                                          </div><!-- End .col-auto -->
+                                          <div class="col">
+                                            <h4>{{ review.comment }}</h4>
+                                            <div class="review-content">
+                                              <p>{{ review.comment }}</p>
+                                            </div><!-- End .review-content -->
+                                            <div class="review-action">
+                                              <a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
+                                              <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
+                                            </div><!-- End .review-action -->
+                                          </div><!-- End .col -->
+                                        </div><!-- End .row -->
+                                      {% endfor %}
+                                    {% else %}
+                                      <p>No reviews available.</p>
+                                    {% endif %}
+                                  </div><!-- End .review -->
+                                </div><!-- End .reviews -->
+                              </div><!-- .End .tab-pane -->
+                              
+                        </div><!-- End .tab-content -->
+                    </div><!-- End .product-details-tab -->
+
+                </div>
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+        <footer class="footer">
+        	<div class="footer-middle">
+	            <div class="container">
+	            	<div class="row">
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget widget-about">
+	            				<img src="https://res.cloudinary.com/zenbusiness/q_auto/v1/logaster/logaster-2019-02-0008-t-shoe-splash-logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+	            				<p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+
+	            				<div class="social-icons">
+	            					<a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
+	            				</div><!-- End .soial-icons -->
+	            			</div><!-- End .widget about-widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="about.html">About Molla</a></li>
+	            					<li><a href="#">How to shop on Molla</a></li>
+	            					<li><a href="#">FAQ</a></li>
+	            					<li><a href="contact.html">Contact us</a></li>
+	            					<li><a href="login.html">Log in</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="#">Payment Methods</a></li>
+	            					<li><a href="#">Money-back guarantee!</a></li>
+	            					<li><a href="#">Returns</a></li>
+	            					<li><a href="#">Shipping</a></li>
+	            					<li><a href="#">Terms and conditions</a></li>
+	            					<li><a href="#">Privacy Policy</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="#">Sign In</a></li>
+	            					<li><a href="cart.html">View Cart</a></li>
+	            					<li><a href="#">My Wishlist</a></li>
+	            					<li><a href="#">Track My Order</a></li>
+	            					<li><a href="#">Help</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+	            	</div><!-- End .row -->
+	            </div><!-- End .container -->
+	        </div><!-- End .footer-middle -->
+
+	        <div class="footer-bottom">
+	        	<div class="container">
+	        		<p class="footer-copyright">Copyright © 2019 Skittish Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+	        		<figure class="footer-payments">
+	        			<img src="https://res.cloudinary.com/zenbusiness/q_auto/v1/logaster/logaster-2019-02-0008-t-shoe-splash-logo.png" alt="Payment methods" width="272" height="20">
+	        		</figure><!-- End .footer-payments -->
+	        	</div><!-- End .container -->
+	        </div><!-- End .footer-bottom -->
+        </footer><!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Sticky Bar -->
+    <div class="sticky-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <input type="hidden" value="{{i.uid}}" class="product_id">
+                    <figure class="product-media">
+                        <a href="product.html">
+                            <img src="/media/{{ i.productattribute_set.first.product_images.first.image}}" data-zoom-image="/media/{{ i.productattribute_set.first.product_images.first.image}}"  alt="Product image">
+                        </a>
+                    </figure><!-- End .product-media -->
+                    <h4 class="product-title" ><a href="product.html">{{i.product_name}}</a></h4><!-- End .product-title -->
+                </div><!-- End .col-6 -->
+
+                <div class="col-6 justify-content-end">
+                    <div class="product-price">
+                        {{i.productattribute_set.first.selling_price}}
+                    </div><!-- End .product-price -->
+                
+                    <div class="product-details-quantity">
+                        <input type="number" id="productQty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                    </div><!-- End .product-details-quantity -->
+
+                    <div class="product-details-action">
+                         <a href="{% url 'add_cart' %}" class="btn-product btn-cart" id="addtocart"><span>add to cart</span></a>
+                        <a href="{% url 'add_wishlist' %}" class="btn-product btn-wishlist" id="addwishlist"><span>Add to Wishlist</span></a>
+                    </div><!-- End .product-details-action -->
+                </div><!-- End .col-6 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .sticky-bar -->
+    {% endfor %}
+    {% endif %}
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-wrapper">
+            <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+            <form action="#" method="get" class="mobile-search">
+                <label for="mobile-search" class="sr-only">Search</label>
+                <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
+                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+            </form>
+            
+            <nav class="mobile-nav">
+                <ul class="mobile-menu">
+                    <li class="active">
+                        <a href="{% url 'indexpage' %} " class="sf-with-ul">Home</a>
+
+                        <ul>
+                           
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{% url 'all_products' %}" class="sf-with-ul">Shop</a>
+                        <ul>
+                           
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{% url 'all_products' %}" class="sf-with-ul">Product</a>
+                        <ul>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Pages</a>
+                        <ul>
+                            <li>
+                                <a href="about.html">About</a>
+
+                                <ul>
+                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact</a>
+
+                                <ul>
+                                    
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="blog.html">Blog</a>
+
+                        <ul>
+                            
+                            <li>
+                                <a href="#">Grid</a>
+                                <ul>
+                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Masonry</a>
+                                <ul>
+                                   
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Mask</a>
+                                <ul>
+                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Single Post</a>
+                                <ul>
+                                    
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="elements-list.html">Elements</a>
+                        <ul>
+                            
+                        </ul>
+                    </li>
+                </ul>
+            </nav><!-- End .mobile-nav -->
+
+            <div class="social-icons">
+                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+            </div><!-- End .social-icons -->
+        </div><!-- End .mobile-menu-wrapper -->
+    </div><!-- End .mobile-menu-container -->
+
+    <!-- Sign in / Register Modal -->
+    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="icon-close"></i></span>
+                    </button>
+
+                    <div class="form-box">
+                        <div class="form-tab">
+                            <ul class="nav nav-pills nav-fill" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin" role="tab" aria-controls="signin" aria-selected="true">Sign In</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="tab-content-5">
+                                <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
+                                    <form action="#">
+                                        <div class="form-group">
+                                            <label for="singin-email">Username or email address *</label>
+                                            <input type="text" class="form-control" id="singin-email" name="singin-email" required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-group">
+                                            <label for="singin-password">Password *</label>
+                                            <input type="password" class="form-control" id="singin-password" name="singin-password" required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-footer">
+                                            <button type="submit" class="btn btn-outline-primary-2">
+                                                <span>LOG IN</span>
+                                                <i class="icon-long-arrow-right"></i>
+                                            </button>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="signin-remember">
+                                                <label class="custom-control-label" for="signin-remember">Remember Me</label>
+                                            </div><!-- End .custom-checkbox -->
+
+                                            <a href="#" class="forgot-link">Forgot Your Password?</a>
+                                        </div><!-- End .form-footer -->
+                                    </form>
+                                    <div class="form-choice">
+                                        <p class="text-center">or sign in with</p>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login btn-g">
+                                                    <i class="icon-google"></i>
+                                                    Login With Google
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login btn-f">
+                                                    <i class="icon-facebook-f"></i>
+                                                    Login With Facebook
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- End .form-choice -->
+                                </div><!-- .End .tab-pane -->
+                                <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                                    <form action="#">
+                                        <div class="form-group">
+                                            <label for="register-email">Your email address *</label>
+                                            <input type="email" class="form-control" id="register-email" name="register-email" required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-group">
+                                            <label for="register-password">Password *</label>
+                                            <input type="password" class="form-control" id="register-password" name="register-password" required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-footer">
+                                            <button type="submit" class="btn btn-outline-primary-2">
+                                                <span>SIGN UP</span>
+                                                <i class="icon-long-arrow-right"></i>
+                                            </button>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="register-policy" required>
+                                                <label class="custom-control-label" for="register-policy">I agree to the <a href="#">privacy policy</a> *</label>
+                                            </div><!-- End .custom-checkbox -->
+                                        </div><!-- End .form-footer -->
+                                    </form>
+                                    <div class="form-choice">
+                                        <p class="text-center">or sign in with</p>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login btn-g">
+                                                    <i class="icon-google"></i>
+                                                    Login With Google
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login  btn-f">
+                                                    <i class="icon-facebook-f"></i>
+                                                    Login With Facebook
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- End .form-choice -->
+                                </div><!-- .End .tab-pane -->
+                            </div><!-- End .tab-content -->
+                        </div><!-- End .form-tab -->
+                    </div><!-- End .form-box -->
+                </div><!-- End .modal-body -->
+            </div><!-- End .modal-content -->
+        </div><!-- End .modal-dialog -->
+    </div><!-- End .modal -->
+
+    <!-- Plugins JS File -->
+    <script src="/media/js/jquery.min.js"></script>
+    <script src="/media/js/bootstrap.bundle.min.js"></script>
+    <script src="/media/js/jquery.hoverIntent.min.js"></script>
+    <script src="/media/js/jquery.waypoints.min.js"></script>
+    <script src="/media/js/superfish.min.js"></script>
+    <script src="/media/js/owl.carousel.min.js"></script>
+    <script src="/media/js/bootstrap-input-spinner.js"></script>
+    <script src="/media/js/jquery.elevateZoom.min.js"></script>
+    <script src="/media/js/bootstrap-input-spinner.js"></script>
+    <script src="/media/js/jquery.magnific-popup.min.js"></script>
+    <script src="/media/js/alertify.min.js"></script> 
+    <script src="/media/js/alertify.min.js"></script> 
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    <script>alertify.set('notifier','position','top-right');</script>
+    <script src="/media/js/main.js"></script>
+
+    <script>
+    
+
+// product_variation
+
+$(document).ready(function() {
+    // Hide all size images by default
+    $(".choose-size").hide();
+  
+    // Show size according to selected color
+    $(".choose-color").on('click', function() {
+      $(".choose-size").removeClass('active');
+      $(".choose-color").removeClass('focused');
+      $(this).addClass('focused');
+  
+      var _color = $(this).attr('data-color');
+      $(".choose-size").hide();
+      $(".img" + _color).show();
+      $(".img" + _color).first().addClass('active');
+      var _quantity = $(this).addClass('data-quantity');
+      var _qut = $(this).attr('data-quantity');
+  
+      var _price = $(".img" + _color).first().attr('data-price');
+      $(".product-price").text(_price);
+      var productAttributeId = $(this).data('product-attribute');
+      console.log("the attribute is",productAttributeId);
+  
+    
+  
+      console.log(_price);
+      console.log(_qut);
+  
+      function getImageSource(color, callback) {
+        // Fetch the image source based on the color from the ProductImage model
+        var csrftoken = getCookie('csrftoken');  // Fetch the CSRF token from cookies
+  
+        $.ajax({
+          url: '/get-image/',
+          type: 'POST',
+          data: { color: color, product_attribute_id: productAttributeId },
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRFToken', csrftoken);  // Include the CSRF token in the request headers
+          },
+          success: function(response) {
+            console.log(response)
+            if (response && response.image) {
+              callback(response.image);
+            }
+          },
+          error: function() {
+            console.log('Error fetching image source');
+          }
+        });
+      }
+      getImageSource(_color, function(imageSource) {
+        // Update the main product image with the new color
+        $("#product-zoom").attr("src", imageSource);
+        $("#product-zoom").attr("data-zoom-image", imageSource);
+        updateProductGallery(_color);
+      });
+      function updateProductGallery(_color) {
+        // Find the product gallery item with matching color and update its attributes
+        $('.product-gallery-item').each(function() {
+          var galleryColor = $(this).data('color');
+          if (galleryColor === _color) {
+            var imageSource = $(this).data('image');
+            var zoomImageSource = $(this).data('zoom-image');
+            $(this).attr('href', imageSource);
+            $(this).attr('data-image', imageSource);
+            $(this).attr('data-zoom-image', zoomImageSource);
+            $(this).find('img').attr('src', imageSource);
+          }
+        });
+      }
+      // Function to get the CSRF token from cookies
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    });
+  });
+  
+  
+
+    //show the price
+    $('.instock').hide();
+    $('.outofstock').hide();
+    $('.limitedstock').hide();
+    $(".choose-size").on('click',function(){
+        $(".choose-size").removeClass('active');
+		$(this).addClass('active');
+        var _price=$(this).attr('data-price');
+        var _size=$(this).attr('data-size');
+        var _quantity=$(this).addClass('data-quantity');
+        var _qut=$(this).attr('data-quantity');
+        console.log(_qut)
+   
+        $(".product-price").text(_price);
+
+
+        if (_qut > 0) {
+            if (_qut < 5) {
+                console.log("value" + _qut);
+                $('.product-quantity').show();
+                $('.instock').show();
+                $('.outofstock').hide();
+                $('.limitedstock').text('Only ' + _qut + ' are Available');
+                $('.limitedstock').show();
+            } else {
+                $('.product-quantity').show();
+                $('.instock').show();
+                $('.outofstock').hide();
+                $('.limitedstock').hide();
+            }
+        } else {
+            console.log("else" + _qut);
+            $('.product-quantity').hide();
+            $('.instock').hide();
+            $('.outofstock').show();
+            $('.limitedstock').hide();
+        }
+       
+        console.log(_price);
+        console.log(_size);
+      
+
+    });
+
+    //show first selected color
+   
+    $(".choose-color").first().addClass('focused');
+    var _color=$(".choose-color").first().attr('data-color');
+    var _price=$(".choose-size").first().attr('data-price');
+    var _size=$(".choose-size").first().attr('data-size');
+    var _image=$(".choose-color").first().attr('data-image');
+
+    $(".choose-size").first().addClass('focused');
+    var _size=$(".choose-size").first().attr('data-size');
+    
+    
+    $(".img"+_color).show();
+    $(".img"+_size).show();
+    $(".img"+_color).first().addClass('active');
+    $(".img"+_size).show().addClass('active');
+    $(".img"+_color+" .choose-size").first().addClass('active');
+    $(".img"+_color+" .choose-size.focused").attr('data-size');
+    $(".img"+_image+" .choose-size.focused").attr('data-size');
+   
+    $(".product-price").text( _price );
+   
+    
+
+
+//addtocart
+$("#addtocart").on('click',function(){
+    console.log('hello')
+  
+    var _id=$(this).closest('.product-details-top').find(".product_id").val();
+    var colorElement =$(".choose-color.focused").attr('data-color');
+   
+    var _qty=$(this).closest('.product-details-top').find("#productQty").val();
+    var _productTitle=$(this).closest('.product-details-top').find(".product-title").val();
+  
+    var sizeElement =$(".choose-size.active").attr('data-size');
+    var _productprice=document.querySelector('.product-price').innerText;
+    var size=$(".choose-size.active").first().text();
+    var token= $('input[name=csrfmiddlewaretoken]').val();
+    console.log(_id);
+   
+    console.log(_qty);
+    console.log(_productTitle);
+    console.log(_productprice); 
+    console.log(size); 
+    console.log(colorElement)
+    console.log("the size element is",sizeElement)
+  
+   
+    //ajax
+
+    $.ajax({
+        method:"POST",
+        url:'/cartify/add_cart',
+        data:{
+            'product_id':_id,
+            'qty':_qty,
+            'title':_productTitle,
+            'price':_productprice,
+            'colorElement':colorElement,
+            'sizeElement':sizeElement,
+            'size':size,
+            csrfmiddlewaretoken: token
+        },
+        dataType:'json',
+        success: function(response){
+            var alert = alertify.success(response.status); // Display the alert message
+            setTimeout(function () {
+                alert.close(); // Close the alert
+                setTimeout(function () {
+                    location.reload(); // Reload the page after a slight delay
+                }, 1000);
+            }, 5000);
+           
+        }
+        
+        
+    });
+    //endajax
+    
+    
+
+})
+
+
+
+
+
+//add wishlist
+
+    $("#addwishlist").on('click',function(){
+        console.log('hello')
+        var _id=$(this).closest('.product-details-top').find(".product_id").val();
+        var _qty=$(this).closest('.product-details-top').find("#productQty").val();
+        var _productTitle=$(this).closest('.product-details-top').find(".product-title").val();
+        var _size=document.querySelector(".choose-size").innerText;
+        var _productprice=document.querySelector('.product-price').innerText;
+        var _productimage=$(this).closest('.product-details').find(".choose-color").val();
+        var token= $('input[name=csrfmiddlewaretoken]').val();
+        console.log(_id);
+        console.log(_qty);
+        console.log(_productTitle);
+        console.log(_productprice); 
+        console.log(_size); 
+        console.log(_productimage)
+       
+        //ajax
+
+        $.ajax({
+            method:"POST",
+            url:'/wishlist/add_wishlist',
+            data:{
+                'product_id':_id,
+                'qty':_qty,
+                'title':_productTitle,
+                'price':_productprice,
+               
+                csrfmiddlewaretoken: token
+            },
+            dataType:'json',
+            success: function(response){
+                console.log(response);
+                var alert = alertify.success(response.status); // Display the alert message
+                setTimeout(function () {
+                    alert.close(); // Close the alert
+                    setTimeout(function () {
+                        location.reload(); // Reload the page after a slight delay
+                    }, 1000);
+                }, 5000);
+               
+            }
+            
+            
+        });
+        //endajax
+        
+        
+    
+    })
+    
+
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            // Set the initial image and color
+            var initialImage = $('#product-zoom').attr('src');
+            var initialColor = $('.product-gallery-item.active').data('color');
+            
+            // Handle color variant selection
+            $('.product-gallery-item').on('click', function(e) {
+                e.preventDefault();
+                console.log("hai")
+                // Get the selected color and corresponding image
+                var selectedColor = $(this).data('color');
+                var selectedImage = $(this).data('image');
+                
+                // Update the main image and selected image
+                $('#product-zoom').attr('src', selectedImage);
+                $('#selected-image').attr('src', selectedImage);
+                
+                // Remove 'active' class from all color variants
+                $('.product-gallery-item').removeClass('active');
+                
+                // Add 'active' class to the selected color variant
+                $(this).addClass('active');
+            });
+            
+            // Set the initial active color
+            $('.product-gallery-item[data-color="' + initialColor + '"]').addClass('active');
+        });
+    </script>
+    
+    
+</body>
+
+
+<!-- molla/product.html  22 Nov 2019 09:55:05 GMT -->
+</html>

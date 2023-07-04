@@ -1,0 +1,138 @@
+{% extends 'admin_panel/base.html' %}
+{% load tz %}
+{% block styles%}
+
+<style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tm-block-col {
+      width: 100%;
+    }
+    .cancel-box {
+        display: inline-block;
+        border: 1px solid red;
+        padding: 5px;
+      }
+      
+      .btn-cancel {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 5px;
+        text-decoration: none;
+      }
+      
+      .btn-cancel:hover {
+        background-color: white;
+        color: black;
+      }
+      .container {
+        width: 100%;
+        max-width: 1900px; /* Set the maximum width as needed */
+        margin: 0 auto; /* Center the container horizontally */
+      }
+      .tm-block-col {
+        min-height: 1500px; /* Set the minimum height as needed */
+      }
+      .tm-block-taller {
+        min-height: 1500px; /* Set the minimum height as needed */
+      }
+    
+      
+      
+  </style>
+
+
+
+
+{% endblock %}
+
+{% block content%}
+
+<div class="container">
+<div class="col-12 tm-block-col">
+    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+        <h2 class="tm-block-title">Orders List</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ORDER NO.</th>
+                    <th scope="col">STATUS</th>
+                    <th scope="col">DATE</th>
+                    <th scope="col">PRODUCT</th>
+                    <th scope="col">COLOR</th>
+                    <th scope="col">SIZE</th>
+                    <th scope="col">QUANTITY</th>
+                    <th scope="col">ORDER CANCEL</th>
+                    <th scope="col">EDIT</th>
+                  
+                </tr>
+            </thead>
+            <tbody>
+                {% if list %}
+                {% for i in list %}
+                <tr>
+                  <th scope="row">
+                    <b><a href="{% url 'orderdetail' i.id %}">{{ i.id }}</a></b>
+                  </th>
+                    <td>
+                        {% if i.status == 'Successfully Delivered' %}
+                            <div class="tm-status-circle moving"></div>
+                            {{ i.status }}
+                        {% elif i.status == 'Pending' %}
+                            <div class="tm-status-circle moving"></div>
+                            <span style="color: blue;">{{ i.status }}</span>
+                        
+                        {% elif i.status == 'Cancelled' %}
+                            <div class="tm-status-circle cancelled"></div>
+                            {{ i.status }}
+                        {% else %}
+                            {{ i.status }}
+                        {% endif %}
+                    </td>
+                    <td><b>{{ i.order.created_at|timezone:"Asia/Kolkata" }}</b></td>
+                   
+                    <td><b>{{i.product}}</b></td>
+                    <td><b>{{i.color}}</b></td>
+                    <td><b>{{i.size}}</b></td>
+                    <td><b>{{i.product_qty}}</b></td>
+                   
+                    
+                    <td>
+                       
+                          <a href="{% url 'order_cancelled' i.id %}" class="btn btn-cancel" data-toggle="tooltip" title="Cancel">
+                            <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                          </a>
+                        
+                      </td>
+                      <td>
+                        <a href="{% url 'order_update' i.id %}" class="btn text-secondary px-0" data-toggle="tooltip" title="Edit">
+                          <i class="icon-copy fa fa-edit" aria-hidden="true" style="color: white;"></i>
+                        </a>
+                      </td>
+                </tr>
+{% endfor %}
+{% endif %}
+               
+             
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+
+
+
+
+
+{% endblock %}

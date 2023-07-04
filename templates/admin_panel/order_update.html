@@ -1,0 +1,58 @@
+{% extends 'admin_panel/base.html' %}
+{% block styles%}
+<style>
+body {
+	
+	background-color: #A7BBCF;
+	overflow-x: hidden;
+}
+.signup-form label {
+  color: black;
+}
+
+</style>
+{% endblock %}  
+{% block content%}
+
+
+<div class="signup-form" style="max-width: 500px; margin: 0 auto; ">
+    <form action="" method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+       
+
+		<h2 class="text-center">Edit Order</h2>
+		<p class="text-center">Edit</p>
+		<hr>
+       
+        <div class="form-group">
+            <label for = " ">Status</label>
+            {{form.status}}
+            {% if form.errors.status %}
+                <label for="" class="text-danger">{{form.errors.status}}</label>
+            {% endif %} 
+        <div class="form-group">
+                <label for=" ">Message</label>
+                {{ form.message }}
+                {% if form.errors.message %}
+                    <label for="" class="text-danger">{{ form.errors.message }}</label>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="">Delivered Date</label>
+                {{ form.delivered_date }}
+                {% if form.errors.delivered_date %}
+                    <label for="" class="text-danger">{{ form.errors.delivered_date}}</label>
+                {% endif %}
+            </div>
+           
+		<div class="form-group">
+            <button type="submit" class="btn btn-success btn-lg">Update</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{ form.media }}
+{% endblock %}

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/index-10.html  22 Nov 2019 09:58:04 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Skittish-Footwares</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/media/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/media/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/media/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="/media/images/icons/site.html">
+    <link rel="mask-icon" href="/media/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="/media/images/icons/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-yd9DUDbBY7mU8jI9XeJNvlp6mC8g4KTWbA5zyg9VnQIBBU2i+qFsLZ7jd9wV0Clu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="/media/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="/media/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/media/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="/media/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="/media/css/plugins/jquery.countdown.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/skins/skin-demo-10.css">
+    <link rel="stylesheet" href="/media/css/demos/demo-10.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+    
+    {% block styles %}
+
+
+
+
+    {% endblock %}
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="header header-8">
+            <div class="header-top">
+                <div class="container">
+
+                    <div class="header-right">
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul>
+                                    <li>
+                                    {% if wishlist %}
+                                    <a href="{% url 'wishlist' %}"><i class="icon-heart-o"></i>My Wishlist</a>
+                                    {% else %}
+                                    <a href="{% url 'wishlistempty' %}"><i class="icon-heart-o"></i>My Wishlist</a>
+                                    {% endif %}
+                                    </li>
+                                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul><!-- End .top-menu -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-top -->
+
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="index.html" class="logo">
+                            <img src="https://res.cloudinary.com/zenbusiness/q_auto/v1/logaster/logaster-2019-02-0008-t-shoe-splash-logo.png" alt="Skittish Logo" width="105" height="25">
+                        </a>
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+                        <nav class="main-nav">
+                            <ul class="menu sf-arrows">
+                                <li class="megamenu-container active">
+                                    <a href="{% url 'indexpage' %} " class="sf-with-ul">Home</a>
+
+                                    
+                                </li>
+                                <li>
+                                    <a href="{% url 'all_products' %}" class="sf-with-ul">Shop</a>
+
+                                    
+                                </li>
+                                <li>
+                                    <a href="{% url 'all_products' %}" class="sf-with-ul">Product</a>
+
+                                    
+                                        
+                                </li>
+                                <li>
+                                    <a href="#" class="sf-with-ul">MY Account</a>
+
+                                    <ul>
+                                        
+                                        <li>
+                                            <a href="{% url 'user_profile' %}" class="sf-with-ul">Profile</a>
+
+                                        </li>
+                                    
+                                        <li>
+                                            <a href="{% url 'my_orders' %}" class="sf-with-ul">Orders</a>
+
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'wishlist' %}" class="sf-with-ul">Whishlist</a>
+
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'coupon' %}" class="sf-with-ul">Coupon</a>
+
+                                        </li>
+                                
+                                       
+                                    </ul>
+                                </li>
+                                
+                                
+                               
+                            </ul><!-- End .menu -->
+                        </nav><!-- End .main-nav -->
+
+                        <div class="header-search">
+                            <a href="" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                            <form action="/search" method="get">
+                                <div class="header-search-wrapper">
+                                    <label for="q" class="sr-only">Search</label>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                                </div><!-- End .header-search-wrapper -->
+                            </form>
+                        </div><!-- End .header-search -->
+
+                        {% csrf_token %}
+                        <div class="dropdown cart-dropdown">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <i class="icon-shopping-cart"></i>
+                                <span class="cart-count"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                
+                                {% if cart %}
+                                {% for i in cart %}
+                                <div class="dropdown-cart-products">
+                                <input type="hidden" value="{{i.product_id}}" class="product_id">
+                                            <div class="product">
+                                                <div class="product-cart-details">
+                                                    <h4 class="product-title">
+                                                        <a href="product.html">{{i.product.product_name}}</a>
+                                                    </h4>
+        
+                                                    <span class="cart-product-info">
+                                                    {% if i.productattr.quantity >= i.product_qty %}
+                                                        <span class="cart-product-qty">{{i.product_qty}}</span>
+                                                        x {{i.product_price}}
+                                                    {% else %}
+                                                        <h6> outof stock </h6>
+                                                    {% endif %}    
+                                                    </span>
+                                                    
+                                                    
+                                                </div><!-- End .product-cart-details -->
+                                        <figure class="product-image-container">
+                                            {% if i.productattr.product_images.all %}
+                                            <a href="product.html" class="product-image">
+                                                <img src="/media/{{i.productattr.product_images.first.image}}"  alt="product">
+                                            </a>
+                                            {% endif %}
+                                        </figure>
+                                        <a href="" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                    </div><!-- End .product -->
+                                </div>
+                                    {% endfor %}
+                                    {% else %}
+                                    <h6> Your Cart is Empty </h6>
+                                    {% endif %}
+                                <div class="dropdown-cart-total">
+                                    {% if grand_total %}
+                                    <span>{{grand_total}}</span>
+
+                                    <span class="cart-total-price">{{grand_total}}</span>
+                                {% endif %}
+                                </div><!-- End .dropdown-cart-total -->
+
+                                <div class="dropdown-cart-action">
+                                    {% if cart %}
+                                    <a href="{% url 'cart' %}" class="btn btn-primary">View Cart</a>
+                                    {% else %}
+                                    <a href="{% url 'cartempty' %}" class="btn btn-primary">View Cart</a>
+                                    {% endif %}
+                                    <a href="{% url 'checkout' %}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .dropdown-cart-total -->
+                            </div><!-- End .dropdown-menu -->
+                        </div><!-- End .cart-dropdown -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-middle -->
+        </header><!-- End .header -->
+    
+    {% block content %}
+
+
+    {% endblock %}
+
+    <footer class="footer footer-dark">
+        <div class="cta bg-image bg-dark pt-4 pb-5 mb-0" style="background-image: url(/media/images/demos/demo-10/bg-2.jpg);">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-sm-10 col-md-8 col-lg-6">
+                        <div class="cta-heading text-center">
+                            <h3 class="cta-title text-white">Shop with our Skittish Shop</h3><!-- End .cta-title -->
+                            <p class="cta-desc text-white">and receive <span class="font-weight-normal">$20 coupon</span> for first shopping</p><!-- End .cta-desc -->
+                        </div><!-- End .text-center -->
+                    
+                        <form action="#">
+                            <div class="input-group input-group-round">
+                                <input type="email" class="form-control form-control-white" placeholder="Enter your Email Address" aria-label="Email Adress" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-white" type="submit"><span>Subscribe</span><i class="icon-long-arrow-right"></i></button>
+                                </div><!-- .End .input-group-append -->
+                            </div><!-- .End .input-group -->
+                        </form>
+                    </div><!-- End .col-sm-10 col-md-8 col-lg-6 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .cta -->
+        <div class="footer-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget widget-about">
+                            <img src="https://res.cloudinary.com/zenbusiness/q_auto/v1/logaster/logaster-2019-02-0008-t-shoe-splash-logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                            <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+
+                            <div class="social-icons">
+                                <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                                <a href="#" class="social-icon" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
+                                <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                            </div><!-- End .soial-icons -->
+                        </div><!-- End .widget about-widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="about.html">About Skittish</a></li>
+                                <li><a href="#">How to shop on Skittish</a></li>
+                                <li><a href="faq.html">FAQ</a></li>
+                                <li><a href="contact.html">Contact us</a></li>
+                                <li><a href="login.html">Log in</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="#">Payment Methods</a></li>
+                                <li><a href="#">Money-back guarantee!</a></li>
+                                <li><a href="#">Returns</a></li>
+                                <li><a href="#">Shipping</a></li>
+                                <li><a href="#">Terms and conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="#">Sign In</a></li>
+                                <li><a href="cart.html">View Cart</a></li>
+                                <li><a href="#">My Wishlist</a></li>
+                                <li><a href="#">Track My Order</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .footer-middle -->
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="footer-copyright">Copyright © 2019 Skittish Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+                <figure class="footer-payments">
+                    <img src="https://res.cloudinary.com/zenbusiness/q_auto/v1/logaster/logaster-2019-02-0008-t-shoe-splash-logo.png" alt="Payment methods" width="272" height="20">
+                </figure><!-- End .footer-payments -->
+            </div><!-- End .container -->
+        </div><!-- End .footer-bottom -->
+    </footer><!-- End .footer -->
+</div><!-- End .page-wrapper -->
+<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+<div class="mobile-menu-container">
+    <div class="mobile-menu-wrapper">
+        <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+        <form action="#" method="get" class="mobile-search">
+            <label for="mobile-search" class="sr-only">Search</label>
+            <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
+            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+        </form>
+        
+        <nav class="mobile-nav">
+            <ul class="mobile-menu">
+                
+                <li>
+                    <a href="{% url 'indexpage' %} " class="sf-with-ul">Home</a>
+                  
+                </li>
+                <li>
+                    <a href="{% url 'all_products' %}" class="sf-with-ul">Shop</a>
+            
+                </li>
+                <li>
+                    <a href="{% url 'all_products' %}" class="sf-with-ul">Product</a>
+                
+                </li>
+                <li>
+                    <a href="#" class="sf-with-ul">MY Account</a>
+
+                             <ul>
+                                    
+                                    <li>
+                                        <a href="{% url 'user_profile' %}" class="sf-with-ul">Profile</a>
+
+                                    </li>
+                                
+                                    <li>
+                                        <a href="{% url 'my_orders' %}" class="sf-with-ul">Orders</a>
+
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'wishlist' %}" class="sf-with-ul">Whishlist</a>
+
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'coupon' %}" class="sf-with-ul">Coupon</a>
+
+                                    </li>
+                            
+                                   
+                                </ul>
+                            </li>
+           
+            </ul>
+        </nav><!-- End .mobile-nav -->
+
+        <div class="social-icons">
+            <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+            <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+            <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+            <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+        </div><!-- End .social-icons -->
+    </div><!-- End .mobile-menu-wrapper -->
+</div><!-- End .mobile-menu-container -->
+
+<div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <div class="row no-gutters bg-white newsletter-popup-content">
+                <div class="col-xl-3-5col col-lg-7 banner-content-wrap">
+                    <div class="banner-content text-center">
+                        <img src="https://res.cloudinary.com/zenbusiness/q_auto/v1/logaster/logaster-2019-02-0008-t-shoe-splash-logo.png" class="logo" alt="logo" width="60" height="15">
+                        <h2 class="banner-title">get <span>25<light>%</light></span> off</h2>
+                        <p>Shop with our skittish footware and receive timely updates from your favorite products.</p>
+                        <form action="#">
+                            <div class="input-group input-group-round">
+                                <input type="email" class="form-control form-control-white" placeholder="Your Email Address" aria-label="Email Adress" required>
+                                <div class="input-group-append">
+                                    <button class="btn" type="submit"><span>go</span></button>
+                                </div><!-- .End .input-group-append -->
+                            </div><!-- .End .input-group -->
+                        </form>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="register-policy-2" required>
+                            <label class="custom-control-label" for="register-policy-2">Do not show this popup again</label>
+                        </div><!-- End .custom-checkbox -->
+                    </div>
+                </div>
+                <div class="col-xl-2-5col col-lg-5 ">
+                    <img src="https://res.cloudinary.com/zenbusiness/q_auto/v1/logaster/logaster-2019-02-0008-t-shoe-splash-logo.png" class="newsletter-img" alt="newsletter">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Plugins JS File -->
+<script src="/media/js/jquery.min.js"></script>
+<script src="/media/js/bootstrap.bundle.min.js"></script>
+<script src="/media/js/jquery.hoverIntent.min.js"></script>
+<script src="/media/js/jquery.waypoints.min.js"></script>
+<script src="/media/js/superfish.min.js"></script>
+<script src="/media/js/owl.carousel.min.js"></script>
+<script src="/media/js/bootstrap-input-spinner.js"></script>
+<script src="/media/js/jquery.plugin.min.js"></script>
+<script src="/media/js/jquery.magnific-popup.min.js"></script>
+<script src="/media/js/jquery.countdown.min.js"></script>
+<!-- Main JS File -->
+<script src="/media/js/main.js"></script>
+<script src="/media/js/demos/demo-10.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+<script>alertify.set('notifier','position','top-right');</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% block scripts %}
+
+
+{% endblock scripts %}
+</body>
+
+
+<!-- molla/index-10.html  22 Nov 2019 09:58:22 GMT -->
+</html>

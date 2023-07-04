@@ -1,0 +1,86 @@
+{% extends 'admin_panel/base.html' %}
+
+{% block content%}
+
+<div class="card-box pb-10">
+	<div class="h5 pd-20 mb-0"></div>
+	<table class="table-striped table nowrap">
+		<thead>
+           <h4 class='text-center'> Coupons<h4>
+			<tr>
+                    <th scope="col">No.</th> 
+                    <th scope="col">Coupon Code</th> 
+                    <th scope="col">is_expired</th>
+                    <th scope="col">discount_price</th>
+                    <th scope="col">minimum_amount</th>
+                    
+                    
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in coupon %}
+                        <tr>
+                          <th>{{forloop.counter}}</th>
+                          
+                            <th >{{i.coupon_code}}</th>
+                            <th>{{i.is_expired}}</th>
+                            <th>{{i.discount_price}}</th>
+                            <th>{{i.minimum_amount}}</th>
+                            <td><a href="{% url 'edit_coupon' i.id %}" class="btn text secondary px-0 " data-toggle="tooltip" title="Edit">
+                                <i class="icon-copy fa fa-edit" aria-hidden="true"></i>
+                            </a></td>
+                           
+							<td>
+								<a href="#deleteEmployeeModal-{{forloop.counter}}" class="delete" data-toggle="modal">
+								  <i class="material-icons" data-toggle="tooltip" title="Delete" style="color: red;">delete</i>
+								</a>
+							  </td>
+                                
+                                
+                           
+                          </tr>
+                          
+                        {% endfor%}	
+		</tbody>
+	</table>
+</div>
+<div class="p-2 text-center">
+    <a href="{% url 'new_coupon' %}">
+        <button type="button" class="btn btn-primary">
+            <i class="fa fa-plus"></i> Add New
+        </button>
+    </a>
+</div>
+
+
+
+{% for i in coupon %}
+<div id="deleteEmployeeModal-{{forloop.counter}}" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form >
+				{% csrf_token %}
+				<div class="modal-header">						
+					<h4 class="modal-title">Delete Coupon</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">					
+					<p>Are you sure you want to delete these Records?</p>
+					<p class="text-warning"><small>{{i.email}} Information Are Delete?</small></p>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+					<a href="{% url 'delete_coupon' i.id %}" type="submit" class="btn btn-danger">Delete</a> 
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endfor %}
+    {% endblock %}
+   
+   
+ 
+ 

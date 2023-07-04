@@ -1,0 +1,114 @@
+{% extends 'account/base.html' %}
+{% block styles %}
+
+<style>
+.return-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-top: 20px; /* Add padding from the top */
+}
+
+.return-header-text {
+  font-size: 24px;
+  color: #333;
+}
+
+.return-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.return-form {
+  width: 500px;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.return-label {
+  font-weight: bold;
+  margin-bottom: 50px; /* Adjusted margin-bottom value */
+}
+
+.return-textarea {
+  width: 100%;
+  resize: vertical;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.return-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.return-button:hover {
+  background-color: #0069d9;
+}
+
+.return-button:focus {
+  outline: none;
+}
+
+</style>
+{% endblock %}
+  {% block content %}
+  <div class="return-header">
+    <h2 class="return-header-text">Give your Reviews</h2>
+  </div>
+
+  <div class="return-form-container">
+    <form class="return-form" action="{% url 'reviews' item.product_id %}" method="POST">
+      {% csrf_token %}
+      
+      <label class="return-label" for="reason">ADD YOUR REVIEW:</label>
+      <textarea id="reason" name="reason" rows="4" cols="50" required class="return-textarea"></textarea>
+      
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="w-50">
+          <label class="return-label" for="rating">Rating:</label>
+          <select id="rating" name="rating" required class="return-select">
+            <option value="5">5 stars</option>
+            <option value="4">4 stars</option>
+            <option value="3">3 stars</option>
+            <option value="2">2 stars</option>
+            <option value="1">1 star</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary return-button">Submit</button>
+      </div>
+    </form>
+  </div>
+  
+{% endblock %}
+{% block scripts %}
+<!-- Add JavaScript code -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    {% if message == 'success' %}
+    Swal.fire("Order Cancelled", "Your Review Placed Successfully.", "success").then(() => {
+        location.reload();
+        window.location.href = "/oders/my_orders";
+    });
+    {% elif message == 'warning' %}
+    Swal.fire("Order Not Cancelled", "Order cannot be cancelled.", "warning").then(() => {
+        location.reload();
+        window.location.href = "/oders/my_orders";
+    });
+    {% endif %}
+  </script>
+{% endblock scripts %}

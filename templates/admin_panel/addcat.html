@@ -1,0 +1,56 @@
+{% extends 'admin_panel/base.html' %}
+
+{% block styles %}
+<style>
+body {
+    background-color: #A7BBCF;
+    overflow-x: hidden;
+}
+
+.signup-form label {
+    color: black;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="signup-form" style="max-width: 500px; margin: 0 auto; padding-top: 30px;">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2 class="text-center">Add Category</h2>
+       
+        <hr>
+        <div class="form-group">
+            <label for="id_category_name">Category Name</label>
+            {{ form.category_name }}
+            {% if form.errors.category_name %}
+                <label for="id_category_name" class="text-danger">{{ form.errors.category_name }}</label>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="offer">Offer</label>
+            {{ form.offer}}
+            {% if form.errors.offer%}
+                <label for="offer" class="text-danger">{{form.errors.offer}}</label>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="id_slug">Slug</label>
+            {{ form.slug }}
+            {% if form.errors.slug %}
+                <label for="id_slug" class="text-danger">{{ form.errors.slug }}</label>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="id_category_image">Image</label>
+            {{ image_form.category_image }}
+            {% if image_form.errors.category_image %}
+                <label for="id_category_image" class="text-danger">{{ image_form.errors.category_image }}</label>
+            {% endif %}
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-success btn-lg">Update</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

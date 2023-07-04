@@ -1,0 +1,601 @@
+{% extends 'account/base.html' %}
+
+{% block styles %}
+<style>
+.card {
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    margin-bottom: 5px;
+}
+
+.form-check-label {
+    margin-left: 5px;
+    font-weight: normal;
+}
+
+.form-check-input {
+    margin-top: 3px;
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content%}
+
+        <main class="main">
+        	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        		<div class="container">
+        			<h1 class="page-title">Checkout<span>Shop</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+						<li class="breadcrumb-item"> <a href="{% url 'indexpage' %} " class="sf-with-ul">Home</a></li>
+						<li class="breadcrumb-item"><a href="{% url 'all_products' %}" class="sf-with-ul">Shop</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+            	<div class="checkout">
+	                <div class="container">
+						
+            			<form action="{% url 'placeorder'%}" method="POST">
+							 {% csrf_token %}
+							<div class="row">
+								<div class="col-lg-9">
+							<h2 class="checkout-title">Address</h2>
+							
+							<div class="row">
+								<div class="col-md-4">
+									{% if address %}
+										{% for i in address %}
+											{% if forloop.counter <= 2 %} <!-- Limit the loop to the first two addresses -->
+												<div class="card mb-3">
+													<div class="card-body">
+														<h6 class="card-title">Address</h6>
+														<p class="card-text">{{ i.username }}</p>
+														<p class="card-text">{{ i.address }}</p>
+														<p class="card-text">{{ i.city }}</p> 
+														<p class="card-text">{{ i.state }} </p>
+														<p class="card-text">{{ i.pincode }}</p>
+														<div class="form-check">
+															<input class="form-check-input" type="checkbox" id="addressCheck" name="addressCheck" value="{{ i.uid }}">
+															<label class="form-check-label" for="addressCheck{{ forloop.counter }}"> select</label>
+														</div>
+													</div>
+												</div>
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								</div>
+								
+								<div class="col-md-4">
+									{% if address %}
+										{% for i in address %}
+											{% if forloop.counter > 2 and forloop.counter <= 4 %} <!-- Display addresses 3 and 4 -->
+												<div class="card mb-3">
+													<div class="card-body">
+														<h6 class="card-title">Address</h6>
+														<p class="card-text">{{ i.username }}</p>
+														<p class="card-text">{{ i.address }}</p>
+														<p class="card-text">{{ i.city }}</p> 
+														<p class="card-text">{{ i.state }} </p>
+														<p class="card-text">{{ i.pincode }}</p>
+														<div class="form-check">
+															<input class="form-check-input" type="checkbox" id="addressCheck" name="addressCheck" value="{{ i.uid }}">
+															<label class="form-check-label" for="addressCheck{{ forloop.counter }}"> select</label>
+														</div>
+													</div>
+												</div>
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								</div>
+							</div>
+							
+				
+	        							<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" id="checkout-create-acc">
+											<label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
+										</div><!-- End .custom-checkbox -->
+
+										<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" id="checkout-diff-address">
+											<a href="{% url 'user_address' %}">
+												<label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
+											</a>
+										</div><!-- End .custom-checkbox -->
+										
+
+	                					<label>Order notes (optional)</label>
+	        							<textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+		                		</div><!-- End .col-lg-9 -->
+							
+						
+		                		<aside class="col-lg-3">
+									
+		                			<div class="summary">
+		                				<h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+
+		                				<table class="table table-summary">
+		                					<thead>
+		                						<tr>
+		                							<th>Product</th>
+		                							<th>Total</th>
+		                						</tr>
+		                					</thead>
+
+		                					<tbody>
+												{% if cart %}
+												{% for i in cart %}
+		                						<tr>
+		                							<td><a href="#">{{i.product.product_name}}</a></td>
+		                							<td>{{i.product_price}}</td>
+		                						</tr>
+
+												{% endfor %}
+												{% endif %}
+		                						<tr class="summary-subtotal">
+													{% if grand_total %}
+		                							<td>Subtotal:</td>
+		                							<td>₹{{grand_total}}</td>
+													{% endif %}
+		                						</tr><!-- End .summary-subtotal -->
+		                						<tr>
+		                							<td>Shipping:</td>
+		                							<td>Free shipping</td>
+		                						</tr>
+		                						<tr class="summary-total">
+													{% if grand_total %}
+		                							<td>Total:</td>
+		                							<td>₹{{grand_total}}</td>
+													{% endif %}
+		                						</tr><!-- End .summary-total -->
+												
+		                					</tbody>
+		                				</table><!-- End .table table-summary -->
+
+		                				<div class="accordion-summary" id="accordion-payment" name="accordion-payment">
+										    <div class="card">
+												<div class="card-header" id="heading-1">
+													<h2 class="card-title">
+														<a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+															Use your wallet amount
+														</a>
+													</h2>
+												</div><!-- End .card-header -->
+												<div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-payment">
+													<div class="card-body">
+														<input type="radio" id="wallet" name="payment_method" value="wallet">
+														Wallet Amount: ${{wallet.amount}}
+														
+													</div><!-- End .card-body -->
+												</div><!-- End .collapse -->
+											</div><!-- End .card -->
+										
+
+										    <div class="card">
+										        <div class="card-header" id="heading-2">
+										            <h2 class="card-title">
+										                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
+										                   Paypal
+										                </a>
+										            </h2>
+										        </div><!-- End .card-header -->
+										        <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-payment">
+										            <div class="card-body">
+														<input type="radio" name="payment_method" value="Check_payments">
+														<span class="btn-text">PLACEORDER</span>
+														<div id="paypal-button-container"></div>
+													</div><!-- End .card-body -->
+										        </div><!-- End .collapse -->
+										    </div><!-- End .card -->
+
+										    <div class="card">
+										        <div class="card-header" id="heading-3">
+										            <h2 class="card-title">
+										                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
+										                    Cash on delivery
+										                </a>
+										            </h2>
+										        </div><!-- End .card-header -->
+										        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
+										            <div class="card-body">
+														<input type="radio" name="payment_method" value="Cash_on_delivery">
+														PLACEORDER
+										            </div><!-- End .card-body -->
+										        </div><!-- End .collapse -->
+										    </div><!-- End .card -->
+
+										    <div class="card">
+										        <div class="card-header" id="heading-4">
+										            <h2 class="card-title">
+										                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
+															Razorpay <small class="float-right paypal-link">What is Razorpay?</small>
+										                </a>
+										            </h2>
+										        </div><!-- End .card-header -->
+										        <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-payment">
+										            <div class="card-body">
+														<input type="radio" id="Razorpay" name="payment_method" value="paypal">
+										                <span class="btn-text">PLACEORDER</span>
+										            </div><!-- End .card-body -->
+										        </div><!-- End .collapse -->
+										    </div><!-- End .card -->
+
+										   
+										
+		                				<button id="placeOrderBtn" type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+		                					<span class="btn-text">CONTINUE SHOPPING</span>
+		                					<a href="#" class="btn-hover-text">CONTINUE SHOPPING</a>
+
+		                				</button>
+									
+		                			</div><!-- End .summary -->
+								
+		                		</aside><!-- End .col-lg-3 -->
+		                	</div><!-- End .row -->
+            			</form>
+	                </div><!-- End .container -->
+                </div><!-- End .checkout -->
+            </div><!-- End .page-content -->
+
+			<div id="orderSuccessModal" class="modal fade">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Order Placed Successfully</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p>Thank you for your order. Your order has been placed successfully.</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+        </main><!-- End .main -->
+		
+      {% endblock %}
+
+{% block scripts %}
+<script src="https://www.paypal.com/sdk/js?client-id=AfG6_h1sm-GsRmopDojXoBiHKaBTSRQZgdhTvqUGgYBeFCNB6jTPy0JAG775V4g5mljwI_rlNtyhgplq"></script>
+	
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+	<script src="/media/js/alertify.min.js"></script> 
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    <script>alertify.set('notifier','position','top-right');</script>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AfG6_h1sm-GsRmopDojXoBiHKaBTSRQZgdhTvqUGgYBeFCNB6jTPy0JAG775V4g5mljwI_rlNtyhgplq"></script>
+	<!-- Set up a container element for the button -->
+	<script>
+		// Render the PayPal button
+		var addresses = [];
+		paypal.Buttons({
+		  // Set up the transaction
+		  onClick : function(data, actions){
+			 addresses = $('input[name="addressCheck"]:checked').map(function() {
+				return $(this).val();
+			  }).get();
+			  console.log(addresses);
+			if (addresses=="")
+			{
+				alert("Please select an address.");
+				console.log("no address");
+				return false;
+			}
+			else
+			{
+				return true;
+
+			}
+
+		  },
+		  
+		  createOrder: function(data, actions) {
+			var inrAmount = {{ grand_total }};
+			var exchangeRate = 0.014; // Replace with the actual exchange rate from INR to USD
+	  
+			var usdAmount = inrAmount * exchangeRate;
+			return actions.order.create({
+			  purchase_units: [{
+				amount: {
+				 
+					currency_code: 'USD',
+					value: usdAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+				}
+			  }]
+			});
+		  },
+		  // Finalize the transaction
+		  onApprove: function(data, actions) {
+			return actions.order.capture().then(function(orderData) {
+			  // Show a success message to the buyer
+			  console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+			 // const transaction = details.purchase_units[0].payments.captures[0];
+			 // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+			  // When ready to go live, remove the alert and show a success message within this page. For example:
+			  // const element = document.getElementById('paypal-button-container');
+			  // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+			  // Or go to another URL:  window.location.href = 'thank_you.html';
+			  data={
+				'addresses':addresses.join(','),
+				'payment_mode':'paypal',
+				'payment_id':orderData.id,
+				'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+
+			}
+			console.log("inside ",data)
+			$.ajax({
+				method: 'POST',
+				url: '/oders/placeorder', 
+				data : data, // URL of your apply_coupon view
+				dataType: 'json',
+				success: function(response) {
+					console.log(response);
+					var alertMessage = response.status;
+					alertify.success(alertMessage); // Display the alert message
+					setTimeout(function() {
+						location.reload();
+						window.location.href = "{% url 'indexpage' %}"; // Reload the page after a slight delay
+					}, 1000);
+				}
+					
+				});
+			});
+		  }
+		}).render('#paypal-button-container');
+	  </script>
+	  
+
+<script>
+	$("#collapse-4").on('click', function() {
+		console.log("hello");
+		var addresses = $('input[name="addressCheck"]:checked').map(function() {
+			return $(this).val();
+		}).get();
+		console.log(addresses);
+		if (addresses == "") {
+			alert("Please select an address.");
+			console.log("no address");
+		} else {
+			$.ajax({
+				method: 'GET',
+				url: '/oders/proceed_to_pay',
+				success: function(response) {
+					console.log(response);
+					var options = {
+						"key": "rzp_test_GZSVJYTRGnDoFy",
+						"amount": {{grand_total}} * 100,
+						"currency": "INR",
+						"name": "Skittish shop",
+						"description": "Skittish Transaction",
+						"image": "https://live.staticflickr.com/880/26645160997_c5396d71df_z.jpg",
+						"handler": function(response) {
+							data = {
+								'addresses': addresses.join(','),
+								'payment_mode': 'razorpay',
+								'payment_id': response.razorpay_payment_id,
+								'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+							};
+							console.log("inside ", addresses);
+							$.ajax({
+								method: 'POST',
+								url: '/oders/placeorder',
+								data: data,
+								dataType: 'json',
+								success: function(response) {
+									console.log(response);
+									var alertMessage = response.status;
+									alertify.success(alertMessage); // Display the alert message
+									setTimeout(function() {
+										location.reload();
+										window.location.href = "{% url 'indexpage' %}"; // Reload the page after a slight delay
+									}, 1000);
+								}
+							});
+						},
+						"prefill": {
+							"name": "Gaurav Kumar",
+							"email": "gaurav.kumar@example.com",
+							"contact": "9000090000"
+						},
+						"notes": {
+							"address": "Razorpay Corporate Office"
+						},
+						"theme": {
+							"color": "#3399cc"
+						}
+					};
+					var rzp1 = new Razorpay(options);
+					rzp1.on('payment.failed', function(response) {
+						alert(response.error.code);
+						alert(response.error.description);
+						alert(response.error.source);
+						alert(response.error.step);
+						alert(response.error.reason);
+						alert(response.error.metadata.order_id);
+						alert(response.error.metadata.payment_id);
+					});
+					rzp1.open();
+				}
+			});
+		}
+	});
+
+</script>
+
+<script>
+    var addresses = [];
+    $(document).ready(function() {
+        $("#collapse-3").on('click', function() {
+            console.log("hello");
+            addresses = $('input[name="addressCheck"]:checked').map(function() {
+                return $(this).val();
+            }).get();
+            console.log(addresses);
+
+            if (addresses.length === 0) {
+				alert("Please select an address.");
+                console.log("no address");
+                return false;
+            } else {
+                console.log("hai");
+
+                $.ajax({
+                    method: 'POST',
+                    url: '/oders/placeorder', 
+                    data: {
+                        'addresses': addresses.length > 0 ? addresses.join(',') : '',
+                        'payment_mode': 'Cash on Delivery',
+                        'payment_id': 'Skittish456',
+                        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+                    },
+					dataType: 'json',
+					success: function(response) {
+						console.log(response);
+						var alertMessage = response.status;
+						alertify.success(alertMessage); // Display the alert message
+						setTimeout(function() {
+							location.reload();
+							window.location.href = "{% url 'indexpage' %}"; // Reload the page after a slight delay
+						}, 1000);
+					}
+                    error: function(xhr, status, error) {
+                        console.log('AJAX request error:', error);
+                        // Handle the error case
+                        // For example, you can display an error message to the user
+                        alert('ORDER PLACED UNSUCCESSFULLY');
+						location.reload();
+						window.location.href = "{% url 'indexpage' %} ";
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+    var addresses = [];
+    $(document).ready(function() {
+        $("#collapse-1").on('click', function() {
+            console.log("hello this wallet");
+            addresses = $('input[name="addressCheck"]:checked').map(function() {
+                return $(this).val();
+            }).get();
+            console.log(addresses);
+
+            if (addresses.length === 0) {
+				alert("Please select an address.");
+                console.log("no address");
+                return false;
+            } else {
+                console.log("hai");
+
+                // Check if the wallet payment method is selected
+                var paymentMethod = $('input[name="payment_method"]:checked').val();
+                if (paymentMethod === "wallet") {
+					console.log("wallet")
+                    // Check if wallet amount is sufficient
+                    var orderTotal = parseFloat('{{ grand_total }}'); // Replace with the actual variable or context variable that holds the order total
+                    console.log("total",orderTotal)
+					var walletAmount = parseFloat('{{ wallet.amount }}');  // Replace with the actual variable or context variable that holds the wallet amount
+                    console.log(walletAmount)
+					if (walletAmount >= orderTotal) {
+                        $.ajax({
+                            method: 'POST',
+                            url: '/oders/placeorder',
+                            data: {
+                                'addresses': addresses.length > 0 ? addresses.join(',') : '',
+                                'payment_mode': 'Wallet',
+                                'payment_id': 'Skittish456',
+                                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                console.log(response);
+                                var alertMessage = response.status;
+									alertify.success(alertMessage); // Display the alert message
+									setTimeout(function() {
+										location.reload();
+										window.location.href = "{% url 'indexpage' %}"; // Reload the page after a slight delay
+									}, 1000);
+                                var newWalletAmount = walletAmount - orderTotal;
+                                $('.wallet-amount').text('Amount: $' + newWalletAmount.toFixed(2));
+                         
+                            },
+                            error: function(xhr, status, error) {
+                                console.log('AJAX request error:', error);
+                               
+                                alert('ORDER PLACED UNSUCCESSFULLY');
+                                location.reload();
+                                window.location.href = "{% url 'indexpage' %} ";
+                            }
+                        });
+                    } else {
+                       
+                        alert('Insufficient wallet amount. Please choose a different payment method or add funds to your wallet.');
+                    }
+                } 
+            }
+        });
+    });
+</script>
+
+
+<script>
+
+	var checkbox = document.getElementById('checkout-diff-address');
+	console.log(checkbox)
+	
+	
+	checkbox.addEventListener('change', function() {
+	
+	  if (this.checked) {
+	
+		window.location.href = "{% url 'address' %}";
+	  }
+	});
+  </script>
+
+
+  <script>
+  
+    var orderPlaced = true;
+
+    if (orderPlaced) {
+        $(document).ready(function() {
+            $('#orderSuccessModal').modal('show');
+        });
+    }
+</script>
+
+
+
+
+
+{% endblock scripts %}
