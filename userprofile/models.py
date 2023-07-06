@@ -10,7 +10,7 @@ from django.utils import timezone
 
 COUNTRY_CHOICES = (
     ('US', 'United States'),
-    ('IN', 'India'),
+    ('INDIA', 'India'),
     ('UK', 'United Kingdom'),
     # Add more countries as needed
     )

@@ -28,8 +28,8 @@ body {
             {% endif %}
         </div>
         <div class="form-group">
-            <label for="offer">Offer</label>
-            {{ form.offer}}
+            <label for="offer">Offer(in percentage)</label>
+            {{ form.offer}} 
             {% if form.errors.offer%}
                 <label for="offer" class="text-danger">{{form.errors.offer}}</label>
             {% endif %}

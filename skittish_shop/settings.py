@@ -136,15 +136,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
+# STATIC_ROOT = 'staticfiles'
+# STATIC_URL = '/static/'
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
-STATICFILES_DIR = {
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR , "public/static")
-}
+]
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'public/static') 
 MEDIA_URL = '/media/'
@@ -167,3 +167,40 @@ PAYPAL_TEST = True
 
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
+
+
+
+
+# server {
+#     listen 80;
+#     server_name 16.171.141.157;
+
+#     location = /favicon.ico { access_log off; log_not_found off; }
+    
+#     location /static/ {
+#         alias /home/ubuntu/skittish_shope/public/static/;
+#     }
+
+#     location / {
+#         include proxy_params;
+#         proxy_pass http://unix:/run/gunicorn.sock;
+#     }
+# }
+
+# [Unit]
+# Description=gunicorn daemon
+# Requires=gunicorn.socket
+# After=network.target
+
+# [Service]
+# User=ubuntu
+# Group=www-data
+# WorkingDirectory=/home/ubuntu/skittish_shope
+# ExecStart=/home/ubuntu/skittishenv/bin/gunicorn \
+#           --access-logfile - \
+#           --workers 3 \
+#           --bind unix:/run/gunicorn.sock \
+#           skittish_shop.wsgi:application
+
+# [Install]
+# WantedBy=multi-user.target

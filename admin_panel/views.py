@@ -371,6 +371,8 @@ def add_category(request):
 
             if not Category.objects.filter(category_name__iexact=category_name).exists():
                 if offer >= 0:
+                    offer_with_percentage = f"{offer}%"
+                    form.instance.offer = offer_with_percentage
                     form.save()
                     return redirect('/admin_panel/Category_details')
                 else:

@@ -139,11 +139,23 @@
                                             </div>
                                         {% endif %}
                                           </div>
+                                      
 			            			</div><!-- End .cart-discount -->
                                     
-
-			            			<a href="{% url 'cart' %}" class="btn btn-outline-dark-2"><span>NOW YOU ARE USING {{coupon}} COUPON </span><i class="icon-refresh"></i></a>
-		            			</div><!-- End .cart-bottom -->
+                                    <a href="{% url 'cart' %}" class="btn btn-outline-dark-2">
+                                        {% for i in cart %}
+                                        {% if i.coupon %}
+                                     
+                                           
+                                                    <span>NOW YOU ARE USING "{{ i.coupon.coupon_code }}" COUPON</span>
+                                              
+                                    
+                                        {% endif %}
+                                        {% endfor %}
+                                        <i class="icon-refresh"></i>
+                                    </a>
+                                    
+                                </div><!-- End .cart-bottom -->
 	                		</div><!-- End .col-lg-9 -->
 	                		<aside class="col-lg-3">
 	                			<div class="summary summary-cart">

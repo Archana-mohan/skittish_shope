@@ -65,6 +65,7 @@ def cart(request):
     cart=Cart.objects.filter(user=request.user)
     wallet=Wallet.objects.filter(user=request.user)
     coupon = Cart.get_coupon(request.user)
+   
     address=Address.objects.filter(user=request.user).order_by('created_at').last()
     print(address.address) 
     available_coupon=Coupon.objects.all()

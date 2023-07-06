@@ -117,7 +117,7 @@
                             <i class="icon-bars"></i>
                         </button>
 
-                        <a href="index.html" class="logo">
+                        <a href="{% url 'indexpage' %} " class="logo">
                             <img src="https://res.cloudinary.com/zenbusiness/q_auto/v1/logaster/logaster-2019-02-0008-t-shoe-splash-logo.png" alt="Skittish Logo" width="105" height="25">
                         </a>
                     </div><!-- End .header-left -->
@@ -202,7 +202,7 @@
                                     <div class="product">
                                         <div class="product-cart-details">
                                             <h4 class="product-title">
-                                                <a href="product.html">{{i.product.product_name}}</a>
+                                                <a href="#">{{i.product.product_name}}</a>
                                             </h4>
 
                                             <span class="cart-product-info">
@@ -219,7 +219,7 @@
                                         
                                         <figure class="product-image-container">
                                             {% if i.productattr.product_images.all %}
-                                            <a href="product.html" class="product-image">
+                                            <a href="#" class="product-image">
                                                 <img src="/media/{{i.productattr.product_images.first.image}}"  alt="product">
                                             </a>
                                             {% endif %}
@@ -263,8 +263,8 @@
                         <div class="intro-slide">
                             <figure class="slide-image">
                                 <picture>
-                                    <source media="(max-width: 480px)" srcset="assets/images/demos/demo-10/slider/slide-1-480w.jpg">
-                                    <img src="/media/front_image/1st_image.jpg" alt="Image Desc">
+                                    <source media="(max-width: 480px)" srcset="/media/front_image/1st_image.jpg">
+                                    <img src="/media/front_image/1st_image.jpg" alt="Image Desc"class="img-fluid">
                                 </picture>
                             </figure><!-- End .slide-image -->
 
@@ -630,11 +630,11 @@
                                 <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
 
                                 <ul class="widget-list">
-                                    <li><a href="about.html">About Skittish</a></li>
+                                    <li><a href="#">About Skittish</a></li>
                                     <li><a href="#">How to shop on Skittish</a></li>
-                                    <li><a href="faq.html">FAQ</a></li>
-                                    <li><a href="contact.html">Contact us</a></li>
-                                    <li><a href="login.html">Log in</a></li>
+                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="#">Contact us</a></li>
+                                    <li><a href="{% url 'login' %}">Log in</a></li>
                                 </ul><!-- End .widget-list -->
                             </div><!-- End .widget -->
                         </div><!-- End .col-sm-6 col-lg-3 -->
@@ -659,8 +659,8 @@
                                 <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
 
                                 <ul class="widget-list">
-                                    <li><a href="#">Sign In</a></li>
-                                    <li><a href="cart.html">View Cart</a></li>
+                                    <li><a href="{% url 'signup' %} ">Sign In</a></li>
+                                    <li><a href="#">View Cart</a></li>
                                     <li><a href="#">My Wishlist</a></li>
                                     <li><a href="#">Track My Order</a></li>
                                     <li><a href="#">Help</a></li>
@@ -688,13 +688,7 @@
 
     <div class="mobile-menu-container">
         <div class="mobile-menu-wrapper">
-            <span class="mobile-menu-close"><i class="icon-close"></i></span>
-
-            <form action="#" method="get" class="mobile-search">
-                <label for="mobile-search" class="sr-only">Search</label>
-                <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
-                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-            </form>
+         
             
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
