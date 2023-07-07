@@ -33,7 +33,7 @@ class forgottern_form(UserCreationForm):
         model = User
         fields=['email']
 class change_form(UserCreationForm):
-    first_name=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control my-2','placeholder':'Enter email address' }))
+    first_name=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control my-2','placeholder':'Enter User name' }))
     new_password=forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control my-2','placeholder':'Enter New password' }))
     confirm_password=forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control my-2','placeholder':'Confirm password' }))
     class Meta:

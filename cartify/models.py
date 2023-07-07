@@ -32,7 +32,7 @@ class Cart(models.Model):
     
     @classmethod
     def calculate_grand_total(cls,user):
-        user_wallet = Wallet.objects.get(user=user)
+        user_wallet, _ = Wallet.objects.get_or_create(user=user)
         cart_items = Cart.objects.filter(user=user)
         grand_total = 0
      
@@ -41,7 +41,7 @@ class Cart(models.Model):
             if cart_item.coupon:
                 total_product_price -= cart_item.coupon.discount_price
             grand_total += total_product_price
-        if user_wallet.discount:
+        if  user_wallet.discount:
             grand_total -= user_wallet.discount
         return grand_total
    

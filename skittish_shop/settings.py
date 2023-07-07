@@ -159,7 +159,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'archana20jaahnav2020'
-EMAIL_HOST_PASSWORD = 'txqcgzlvttbsxegi'
+EMAIL_HOST_PASSWORD = 'yvioqvefirzkbvzf'
 
 
 PAYPAL_RECEIVER_EMAIL = 'sb-c5xgx6555500@business.example.com'
