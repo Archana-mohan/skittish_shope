@@ -4,7 +4,7 @@ from twilio.rest import Client
 import random 
 
 ACCOUNT_SID='AC77ce7b3192872803a56df59d644c417e'
-AUTH_TOKEN='0e949d1c3c43c626e0d4e72acdc25dc4'
+AUTH_TOKEN='43d7b2a540ce70f1847479d2e80cf91b'
 
 class MessaHandler:
     phone_number=None
