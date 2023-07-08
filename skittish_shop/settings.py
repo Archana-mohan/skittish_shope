@@ -89,6 +89,8 @@ WSGI_APPLICATION = 'skittish_shop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -170,37 +172,3 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 
 
 
-
-# server {
-#     listen 80;
-#     server_name 16.171.141.157;
-
-#     location = /favicon.ico { access_log off; log_not_found off; }
-    
-#     location /static/ {
-#         alias /home/ubuntu/skittish_shope/public/static/;
-#     }
-
-#     location / {
-#         include proxy_params;
-#         proxy_pass http://unix:/run/gunicorn.sock;
-#     }
-# }
-
-# [Unit]
-# Description=gunicorn daemon
-# Requires=gunicorn.socket
-# After=network.target
-
-# [Service]
-# User=ubuntu
-# Group=www-data
-# WorkingDirectory=/home/ubuntu/skittish_shope
-# ExecStart=/home/ubuntu/skittishenv/bin/gunicorn \
-#           --access-logfile - \
-#           --workers 3 \
-#           --bind unix:/run/gunicorn.sock \
-#           skittish_shop.wsgi:application
-
-# [Install]
-# WantedBy=multi-user.target
