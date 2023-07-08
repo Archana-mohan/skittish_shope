@@ -32,5 +32,5 @@ class Address(BaseModel):
 class Wallet(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount=models.FloatField(default=False,blank=False)
-    discount=discount = models.FloatField(default=0) 
+    discount = models.FloatField(default=0) 
     

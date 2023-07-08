@@ -8,7 +8,7 @@ from django.db.models import Max,Min,Count,Avg,Aggregate
 # Create your models here.
 class front_image(models.Model):
     img=models.ImageField(upload_to="front_image")
-    img2 = models.ImageField(upload_to="front_image", default='default_image.jpg', null=True)
+    img2 = models.ImageField(upload_to="front_image",null=True)
     heading=models.CharField(max_length=300,null=True)
     categ=models.CharField(max_length=300,null=True)
     price=models.CharField(max_length=300,null=True)

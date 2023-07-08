@@ -87,7 +87,7 @@ def placeorder(request):
         if referring_user.referral_code is None and orderitem.objects.filter(order__user=referring_user).count() > 5:
             referral_code =  generate_referral_code()
             referring_user.referral_code =  referral_code
-            print("the referral code is", referral_code)
+           
             referring_user.save()
         Cart.objects.filter(user=request.user).delete()
         
@@ -105,21 +105,21 @@ def proceed_to_pay(request):
 
 def my_orders(request):
     order=Order.objects.filter(user=request.user).order_by('-id')
-    print(order)
+    
     context={'order':order}
     return render(request,'order/order_list.html',context)
 def my_order_items(request, id):
     oderit = orderitem.objects.filter(order_id=id) 
     delivered_date = None
     time_difference = None
-    print(oderit)
+    
     grand_total = Cart.calculate_grand_total(request.user)
     
     for item in oderit:
         item.progress_percentage = item.calculate_progress_percentage()
         if item.delivered_date is not None:
             item.time_difference = timezone.now().date() - item.delivered_date
-            print("time_difference", item.delivered_date)
+            
         print(item.progress_percentage)
 
     
@@ -158,7 +158,7 @@ def process_return(request, id):
 
     if request.method == 'POST':
         reason = request.POST.get('reason')
-        print(reason)
+        
         order_item.return_reason = reason
         if order_item.status == 'Successfully Delivered':
 

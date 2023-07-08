@@ -81,13 +81,15 @@ class OrderUpdateForm(forms.ModelForm):
     status = forms.ChoiceField(choices=oderstatus, initial='Pending')
     message=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control my-2','placeholder':'Message'}))
     delivered_date = forms.DateField(
-    widget=DatePickerInput(
-        options={
-            'format': 'yyyy-mm-dd',  # Set the desired format here
-            # Other options...
-        }
+        widget=DatePickerInput(
+            options={
+                'format': 'yyyy-mm-dd',  # Set the desired format here
+                'todayHighlight': True,  # Highlight today's date
+                'autoclose': True,  # Close the datepicker when a date is selected
+                # Other options...
+            }
+        )
     )
-)
     class Meta:
         model = orderitem
         fields =['status','message','delivered_date'   

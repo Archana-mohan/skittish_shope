@@ -32,7 +32,7 @@ def signuppage(request):
         if form.is_valid():
             user = form.save(commit=False)
             referral_code = request.GET.get('referral_code')
-            print("Referral code:", referral_code)
+           
             if referral_code:
                 referred_user = User.objects.filter(referral_code=referral_code).first()
                 print("Referred User:", referred_user)
@@ -53,11 +53,11 @@ def signuppage(request):
 @never_cache
 def loginpage(request):  
         if request.user.is_authenticated and not request.user.is_superuser:
-                print("firstlogin")
+               
                 if request.user.is_otp_verified:
-                        print("otp")
+                       
                         if request.user.is_blocked:
-                                print("invalid entry")
+                                
                                 messages.warning(request,"Account Blocked !!")
                                 return redirect('/accounts/logout')
                         else:
@@ -70,23 +70,22 @@ def loginpage(request):
                 email=request.POST.get('email')
                 mobile='+91'+request.POST.get('mobile')
                 
-                print('this is my mobile number:',mobile)
+                
                 password=request.POST.get('password')
-                print(password)
+                
                 user=authenticate(request,email=email,password=password)
                 
                 if user is not None:
-                        print('thank you')
+                        
                         login(request,user)
                         otp=str(random.randint(1000,9999))
                         profile=User.objects.get(mobile=mobile)
                         profile.otp=otp
                         profile.save()
-                        print(profile.otp)
-                        #obj=MessaHandler(mobile,otp)
-                        #obj.send_otp_on_mobile()
-                        print('mobile num')
-                        print(mobile)
+                        
+                        obj=MessaHandler(mobile,otp)
+                        obj.send_otp_on_mobile()
+                      
                         request.session['mobile'] = mobile
                         if request.user.is_blocked:
                                 messages.warning(request,"You are blocked !!") 
@@ -109,23 +108,23 @@ def otp_varificaton(request):
         if request.user.is_authenticated and not request.user.is_superuser:
                 if request.user.is_otp_verified:
                         if request.user.is_blocked:
-                                print('why you do this')
+                              
                                 return redirect(request,'accounts/login')
                         else:
                                 return redirect('/')
                                 
         mobile=request.session['mobile']
-        print(mobile)
+       
         context={'mobile':mobile}
         if request.method == 'POST':
                 otp=request.POST.get('otp')
-                print(otp)
+               
                 profile=User.objects.filter(mobile=mobile).first()
-                print(profile)
+                
                 if otp == profile.otp:
                         if profile.is_authenticated and not profile.is_superuser:
                                 profile.is_otp_verified=True
-                                print('where are you')
+                                
                                 profile.save()
                                 return redirect('/')
                         messages.success(request,'Successfully registered')
@@ -140,7 +139,7 @@ def otp_varificaton(request):
 @never_cache   
 def logoutpage(request):
     request.user.is_otp_verified=False
-    print('how are you')
+   
     request.user.save()
     logout(request)
     return redirect('/accounts/login')
@@ -158,15 +157,14 @@ def forgottern(request):
                 profile_obj= User.objects.get(email = user_obj)
                 profile_obj.forget_password_token = token
                 profile_obj.save()
-                print(user_obj)
-                print(profile_obj)
+                
                 
 
                 subject='your forgot password link'
                 message=f'hi , click on the link to reset your password http://127.0.0.1:8000/accounts/changepassword/{token}/'
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = [user_obj]
-                print(recipient_list)
+                
                 send_mail(subject, message, email_from, recipient_list)
                 messages.success(request, 'An email is sent.')
                 return redirect('/accounts/forgottern')
@@ -176,13 +174,13 @@ def forgottern(request):
 @never_cache
 def changepassword(request,token):
         profile_obj=User.objects.filter(forget_password_token=token).first()
-        print(profile_obj)
+       
        # context = {'user_id':profile_obj.id}
         if request.method == 'POST':
             new_password=request.POST.get('new_password')
             confirm_password=request.POST.get('confirm_password')
             user_id=request.POST.get('first_name')
-            print(new_password,confirm_password,user_id,'****')
+            
 
             if user_id is None:
                 messages.warning(request,'No user id is found')

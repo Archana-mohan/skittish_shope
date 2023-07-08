@@ -102,15 +102,15 @@ def adminlogin(request):
            
             return render(request,'admin_panel/index.html',context)
     if request.method == 'POST':
-        print('haaaa')
+      
         email=request.POST.get('email')
-        print(email)
+       
         password=request.POST.get('password')
         user=authenticate(request,email=email,password=password)
         if user is not None:
             if user.is_superuser:
                 login(request,user)
-                print('hay')
+                
                 return render(request,'admin_panel/index.html',context)
             else:
                 return redirect('adminlogin')
@@ -128,7 +128,7 @@ def addproducts(request):
     return render(request,'admin_panel/add-product.html')
 @never_cache 
 def mainpage(request):
-    print("hai")
+    
     list=Order.objects.all()
     context={'list':list}
     return render(request,'admin_panel/index.html',context)
@@ -170,7 +170,7 @@ def adduser(request):
 
 @never_cache 
 def edit(request):
-    print('hai')
+  
     if request.user.is_authenticated:
         user=User.objects.get()
         details={'user':user}
@@ -178,9 +178,9 @@ def edit(request):
 @never_cache 
 def update(request,id):
     if request.method == 'POST':
-        print('h')
+       
         u_first_name=request.POST.get('first')
-        print(u_first_name)
+        
         u_mobile=request.POST.get('mobile')
         u_email=request.POST.get('email')
         u_is_blocked=request.POST.get('status')
@@ -188,10 +188,10 @@ def update(request,id):
             u_blocked = False
         else:
             u_blocked = True
-        print("blocked status",u_blocked)
+        
 
         user=User.objects.get(id=id)
-        print(user)
+        
         user.first_name=u_first_name
         user.mobile=u_mobile
         user.email=u_email
@@ -200,7 +200,7 @@ def update(request,id):
         return redirect('/admin_panel/')
 @never_cache 
 def delete(request,id):
-    print(id)
+    
     user=User.objects.get(id=id)
     user.delete()
     details={'user':user}
@@ -231,7 +231,7 @@ def product_details(request):
     return render(request,'admin_panel/products_manage.html',details)
 @never_cache 
 def product_delete(request,uid):
-    print(uid)
+  
     user=Product.objects.get(uid=uid)
     user.delete()
     products=Product.objects.all()
@@ -241,7 +241,7 @@ def product_delete(request,uid):
 def product_update(request,uid):
     products=Product.objects.get(uid=uid)
     productvar=ProductAttribute.objects.filter(product_id=uid)
-    print(uid)
+    
     if request.method == 'POST':
         product_form = ProductUpdateForm(request.POST, instance=products)
        
@@ -259,7 +259,7 @@ def product_update(request,uid):
         product_form = ProductUpdateForm(instance=products)
         variant_form = ProductVariantFormSet(instance=products)
        
-        print(variant_form)
+        
         context={
             'form':product_form,
             'variant_form':variant_form, 
@@ -269,7 +269,7 @@ def product_update(request,uid):
     return render(request,'admin_panel/product_update.html',context)
 @never_cache 
 def adding_product(request):
-    print('hai')
+   
     ProductVariantFormSet = inlineformset_factory(
         Product, ProductAttribute, form=ProductVariantForm, extra=3, can_delete=True
     )
@@ -282,14 +282,14 @@ def adding_product(request):
         variant_form=ProductVariantFormSet(request.POST,request.FILES,instance=product_form.instance)
        
        
-        print('variant updated')
+      
         if product_form.is_valid() and variant_form.is_valid() :
             
             product_form.save()  
             variant_form.save()
          
            
-            print('adding product work prop') 
+           
             return redirect('/admin_panel/product_details')
         else:
            
@@ -316,9 +316,9 @@ def product_variations(request, uid):
     variation =   ProductAttribute.objects.filter(product_id=uid)
     paginator = Paginator(variation, 2) 
     page = request.GET.get('page')
-    print("variation page",page)
+  
     variation = paginator.get_page(page)
-    print(variation )
+ 
     context={'variation':variation}
     return render(request,'admin_panel/variations.html',context)
 @never_cache 
@@ -356,7 +356,7 @@ def Category_details(request):
         return redirect('/admin_panel/mainpage')
 @never_cache     
 def category_delete(request,uid):
-    print(uid)
+   
     user=Category.objects.get(uid=uid)
     user.delete()
     return redirect('/admin_panel/Category_details')
@@ -371,7 +371,7 @@ def add_category(request):
 
             if not Category.objects.filter(category_name__iexact=category_name).exists():
                 if offer >= 0:
-                    offer_with_percentage = f"{offer}%"
+                    offer_with_percentage = offer
                     form.instance.offer = offer_with_percentage
                     form.save()
                     return redirect('/admin_panel/Category_details')
@@ -427,7 +427,7 @@ def add_coupon(request):
     return render(request,'admin_panel/coupon.html',context)
 @never_cache 
 def delete_coupon(request,id):
-    print(id)
+   
     user=Coupon.objects.get(id=id)
     user.delete()
     return redirect('/admin_panel/add_coupon')
@@ -760,7 +760,7 @@ def admin_profile(request):
     
     try:
         profile = User.objects.get(id=user.id)
-        print("profile sdd",profile)
+       
     except User.DoesNotExist:
         profile = None
 
@@ -795,7 +795,7 @@ def security_settings(request):
             confirm_password=request.POST.get('new_pass2')
             user=User.objects.get(is_superuser=True)
             user_id=user.id
-            print(user_id)
+            
             print(new_password,confirm_password,user_id,'****')
             
             if user_id is None:
@@ -829,7 +829,7 @@ def salesreport(request):
     income_orderlist=orders_list.exclude(status__in=[ 'Cancelled', 'return Approved','return'])
     for order in income_orderlist:
         net_income += order.total_price
-    print(net_income)
+    
     deliveries=orders_list.filter(status='Successfully Delivered').count()
     canceled=orders_list.filter(Q(status='Cancelled') | Q(status='returned')| Q(status='Return Approved')).count()
     pending=orders_list.filter(status='Pending').count()
@@ -841,7 +841,7 @@ def adforgottern(request):
         print("hello fo")
         if request.method == 'POST':
                 email = request.POST.get('email')
-                print(email)
+               
             
                 if not User.objects.filter(email=email).first():
                         messages.warning(request, 'Not user found with this username.')
@@ -851,8 +851,7 @@ def adforgottern(request):
                 profile_obj= User.objects.get(email = user_obj)
                 profile_obj.forget_password_token = token
                 profile_obj.save()
-                print(user_obj)
-                print(profile_obj)
+             
                 
 
                 subject='your forgot password link'
@@ -867,7 +866,7 @@ def adforgottern(request):
                 form = forgottern_form()
         return render(request,'account/forgottern.html',{'form':form})
 def delete_account(request,id):
-    print(id)
+   
     account=Bank_account.objects.get(id=id)
     account.delete()
     return redirect('security_settings')
@@ -891,7 +890,7 @@ def edit_account(request,id):
 
 
 def productvar_delete(request,uid):
-    print(uid)
+   
     var=ProductAttribute.objects.get(uid=uid)
     var.delete()
     messages.success(request, 'Your product has been deleted.')
@@ -902,14 +901,14 @@ def orderdetail(request,id):
     oderit = orderitem.objects.filter(id=id) 
     delivered_date = None
     time_difference = None
-    print(oderit)
+    
     grand_total = Cart.calculate_grand_total(request.user)
     
     for item in oderit:
         item.progress_percentage = item.calculate_progress_percentage()
         if item.delivered_date is not None:
             item.time_difference = timezone.now().date() - item.delivered_date
-            print("time_difference", item.delivered_date)
+            
         print(item.progress_percentage)
 
     
@@ -922,7 +921,7 @@ def approve_return(request,id):
     order_item = orderitem.objects.get(id=id)
     order = order_item.order
     user = order.user  
-    print(user)
+  
     user_wallet = Wallet.objects.filter(user=user).first() 
     payment_method = order.payment_mode
     if payment_method in ['razorpay', 'paypal']:
@@ -933,4 +932,7 @@ def approve_return(request,id):
             order_item.save()
         else:
             user_wallet = Wallet.objects.create(user=user, amount=order_item.total_price)  
+    else:
+            order_item.status='Return Approved'
+            order_item.save()
     return redirect('/admin_panel/order_list2')
